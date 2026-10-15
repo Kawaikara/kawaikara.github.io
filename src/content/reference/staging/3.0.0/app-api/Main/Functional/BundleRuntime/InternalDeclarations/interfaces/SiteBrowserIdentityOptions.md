@@ -1,0 +1,40 @@
+---
+title: "SiteBrowserIdentityOptions"
+channel: "staging"
+appVersion: "3.0.0"
+siteApiVersion: "1.0.0"
+category: "Source API · Main"
+description: "Describes the site browser identity options contract."
+displayPath: "Main/Functional/BundleRuntime/InternalDeclarations"
+section: "app-api"
+sourceRef: "working-tree"
+sourcePath: "Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteBrowserIdentityOptions.md"
+symbolKind: "Interface"
+---
+## Properties
+
+### clientHints?
+
+> `readonly` `optional` **clientHints?**: [`string`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+>
+> <span class="type-reference"><span class="type-reference-label">TYPE · TypeScript</span><a class="type-reference-link" href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"><code>string</code></a></span>
+
+`auto` derives a matching Chromium Client Hint from the UA.
+
+### requestHosts?
+
+> `readonly` `optional` **requestHosts?**: readonly `string`[]
+>
+> <span class="type-reference"><span class="type-reference-label">TYPE · TypeScript</span><a class="type-reference-link" href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"><code>readonly string[]</code></a></span>
+
+HTTPS hosts receiving the identity headers. Omit to cover every HTTPS request.
+
+***
+
+### userAgent
+
+> `readonly` **userAgent**: [`string`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+>
+> <span class="type-reference"><span class="type-reference-label">TYPE · TypeScript</span><a class="type-reference-link" href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"><code>string</code></a></span>
+
+`chromium` removes Electron/application product tokens from the current UA.

@@ -1,0 +1,26 @@
+---
+layout: ../../layouts/DocsPageLayout.astro
+title: 시작하기 · Kawaikara Docs
+description: Kawaikara와 관련 도구의 설치 및 사용 문서입니다.
+titleKey: meta.docs.home.title
+descriptionKey: meta.docs.home.description
+---
+
+import I18n from '../../components/I18n.astro';
+import DocumentationReferenceCards from '../../components/DocumentationReferenceCards.astro';
+
+# <I18n keyName="docs.home.title">Kawaikara 문서</I18n>
+
+<p className="doc-lead"><I18n keyName="docs.home.lead">설치 안내와 Kawaikara의 설계, 앱 내부 API 및 Site API를 확인하세요.</I18n></p>
+
+## <I18n keyName="docs.layout.introduction">Introduction</I18n>
+
+<div className="doc-grid">
+  <a className="doc-card" href="/docs/install/"><strong><I18n keyName="docs.sidebar.install">Kawaikara 설치</I18n></strong><span><I18n keyName="docs.home.app.description">Windows와 macOS에서 앱을 설치하고 첫 사이트를 여는 방법</I18n></span></a>
+  <a className="doc-card" href="/docs/extension/"><strong>WebExtension</strong><span><I18n keyName="docs.home.extension.description">Chrome·Firefox 설치와 우클릭 메뉴, 공유 링크 사용법</I18n></span></a>
+  <a className="doc-card" href="/docs/yt-downloader/"><strong>YT Downloader</strong><span><I18n keyName="docs.home.downloader.description">YouTube 구간 선택, 큐, 출력 프리셋과 개발 실행 방법</I18n></span></a>
+</div>
+
+## APP · Site API
+
+<DocumentationReferenceCards />

@@ -1,0 +1,34 @@
+---
+interface Props {
+  documentationLocale?: 'ko' | 'ja';
+}
+
+const { documentationLocale } = Astro.props;
+---
+
+<script is:inline define:vars={{ documentationLocale }}>
+  (() => {
+    const supported = ['ko', 'en', 'ja'];
+    const normalize = (value) => {
+      const language = String(value || '').trim().toLowerCase().split(/[-_]/)[0];
+      return supported.includes(language) ? language : null;
+    };
+
+    let selected = normalize(documentationLocale);
+    try {
+      if (!selected) selected = normalize(new URL(window.location.href).searchParams.get('lang'));
+      if (!selected) selected = normalize(window.localStorage.getItem('kawaikara-locale'));
+    } catch {}
+
+    if (!selected) {
+      const systemLocales = [
+        ...(navigator.languages || [navigator.language]),
+        Intl.DateTimeFormat().resolvedOptions().locale,
+      ];
+      selected = systemLocales.map(normalize).find(Boolean) || 'ko';
+    }
+
+    document.documentElement.lang = selected;
+    document.documentElement.dataset.locale = selected;
+  })();
+</script>

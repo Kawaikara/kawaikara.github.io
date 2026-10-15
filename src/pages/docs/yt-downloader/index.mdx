@@ -1,0 +1,49 @@
+---
+layout: ../../../layouts/DocsPageLayout.astro
+title: YT Downloader · Kawaikara Docs
+description: YT Section Downloader 개발 실행과 기본 사용 안내입니다.
+titleKey: meta.docs.downloader.title
+descriptionKey: meta.docs.downloader.description
+---
+
+import I18n from '../../../components/I18n.astro';
+
+# <I18n keyName="docs.downloader.title">YT Section Downloader</I18n>
+
+<p className="doc-lead"><I18n keyName="docs.downloader.lead">YouTube 영상을 미리 보며 시작·끝 지점을 표시하고, 여러 구간을 큐에 담아 yt-dlp와 ffmpeg로 저장하는 Electron 앱입니다.</I18n></p>
+
+## <I18n keyName="docs.downloader.shortcuts.title">주요 단축키</I18n>
+
+<div className="doc-grid">
+  <div className="doc-card"><strong><kbd>Space</kbd></strong><span><I18n keyName="docs.downloader.shortcut.space">영상 재생 또는 일시정지</I18n></span></div>
+  <div className="doc-card"><strong><kbd>A</kbd> / <kbd>S</kbd></strong><span><I18n keyName="docs.downloader.shortcut.mark">시작 지점과 끝 지점 표시</I18n></span></div>
+  <div className="doc-card"><strong><kbd>←</kbd> / <kbd>→</kbd></strong><span><I18n keyName="docs.downloader.shortcut.second">현재 위치에서 1초 이동</I18n></span></div>
+  <div className="doc-card"><strong><I18n keyName="docs.downloader.shortcut.shift" html><kbd>Shift</kbd> + 방향키</I18n></strong><span><I18n keyName="docs.downloader.shortcut.five">현재 위치에서 5초 이동</I18n></span></div>
+</div>
+
+## <I18n keyName="docs.downloader.dev.title">개발 버전 실행</I18n>
+
+```sh
+git clone https://github.com/fabyday/yt-downloader.git
+cd yt-downloader
+pnpm install
+pnpm dev
+```
+
+<p><I18n keyName="docs.downloader.requirements" html>Node.js 22 이상과 pnpm 10 이상이 필요합니다. 기본 바이너리는 <code>thirdparty/bin/&lt;platform&gt;</code>에서 불러옵니다.</I18n></p>
+
+## <I18n keyName="docs.downloader.presets.title">출력 프리셋</I18n>
+
+- <I18n keyName="docs.downloader.preset.source">YouTube 원본 유지</I18n>
+- H.264 MP4
+- Premiere ProRes
+- DaVinci DNxHR
+
+## <I18n keyName="docs.downloader.build.title">빌드</I18n>
+
+```sh
+pnpm build:win
+pnpm build:mac
+```
+
+<p className="note"><I18n keyName="docs.downloader.note">다운로드는 본인이 권리를 보유했거나 저장이 허용된 콘텐츠에만 사용하세요.</I18n></p>

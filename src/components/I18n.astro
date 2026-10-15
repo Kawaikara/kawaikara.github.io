@@ -1,0 +1,21 @@
+---
+interface Props {
+  keyName: string;
+  html?: boolean;
+  class?: string;
+  className?: string;
+}
+
+const {
+  keyName,
+  html = false,
+  class: className,
+  className: mdxClassName,
+} = Astro.props as Props;
+---
+
+<span
+  class={className ?? mdxClassName}
+  data-i18n={html ? undefined : keyName}
+  data-i18n-html={html ? keyName : undefined}
+><slot /></span>

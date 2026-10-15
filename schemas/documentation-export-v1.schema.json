@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kawaikara.github.io/schemas/documentation-export-v1.schema.json",
+  "title": "Kawaikara App documentation snapshot v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kind",
+    "id",
+    "version",
+    "channel",
+    "source",
+    "generator",
+    "components",
+    "sections",
+    "files"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "app-snapshot" },
+    "id": { "const": "kawaikara" },
+    "version": { "$ref": "#/$defs/semver" },
+    "channel": { "enum": ["stable", "staging", "nightly"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "ref", "commit"],
+      "properties": {
+        "repository": { "type": "string", "format": "uri" },
+        "ref": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "commit": { "type": "string", "pattern": "^[0-9a-fA-F]{40,64}$" }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "version": { "$ref": "#/$defs/semver" }
+      }
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["siteApi", "bundles"],
+      "properties": {
+        "siteApi": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["package", "version", "contractVersion"],
+          "properties": {
+            "package": { "const": "@kawaikara/site-api" },
+            "version": { "$ref": "#/$defs/semver" },
+            "contractVersion": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "bundles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "version", "builtin"],
+            "properties": {
+              "id": { "$ref": "#/$defs/componentId" },
+              "version": { "$ref": "#/$defs/semver" },
+              "builtin": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["appDesign", "appReference", "siteApiReference", "bundles"],
+      "properties": {
+        "appDesign": { "$ref": "#/$defs/guides" },
+        "appReference": { "$ref": "#/$defs/reference" },
+        "siteApiReference": { "$ref": "#/$defs/reference" },
+        "bundles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "reference"],
+            "properties": {
+              "id": { "$ref": "#/$defs/componentId" },
+              "reference": { "$ref": "#/$defs/reference" }
+            }
+          }
+        },
+        "schemas": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["root"],
+          "properties": {
+            "root": { "$ref": "#/$defs/relativePath" }
+          }
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/relativePath" },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "componentId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9@][A-Za-z0-9@._/-]*$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "guides": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "canonicalLocale", "locales"],
+      "properties": {
+        "root": { "$ref": "#/$defs/relativePath" },
+        "canonicalLocale": { "const": "en" },
+        "locales": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$" },
+          "additionalProperties": { "$ref": "#/$defs/relativePath" }
+        }
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "format", "visibility"],
+      "properties": {
+        "root": { "$ref": "#/$defs/relativePath" },
+        "format": { "const": "kawaikara-reference-markdown-v1" },
+        "visibility": { "enum": ["public", "all"] },
+        "translationCatalogs": {
+          "type": "object",
+          "propertyNames": { "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$" },
+          "additionalProperties": { "$ref": "#/$defs/relativePath" }
+        }
+      }
+    }
+  }
+}

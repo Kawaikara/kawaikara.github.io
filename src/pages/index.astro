@@ -1,0 +1,147 @@
+---
+import { ArrowUpRight, Download, Puzzle } from '@lucide/astro';
+import BrandMark from '../components/BrandMark.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="Kawaikara — 다운로드"
+  description="Kawaikara 데스크톱 앱과 브라우저 확장을 다운로드하고 설치하세요."
+  titleKey="meta.home.title"
+  descriptionKey="meta.home.description"
+  canonicalPath="/"
+>
+  <section class="download-hero">
+    <div class="hero-copy" data-reveal>
+      <span class="eyebrow">Desktop viewer</span>
+      <h1>Kawaikara</h1>
+      <p>Windows와 macOS에서 사용할 수 있는 Kawaikara 데스크톱 앱을 다운로드하세요.</p>
+      <div class="hero-actions">
+        <a class="button button--primary" href="https://github.com/fabyday/kawaikara/releases/latest" target="_blank" rel="noreferrer">
+          <Download size={18} /> 최신 버전 다운로드
+        </a>
+        <a class="button button--secondary" href="/docs/install/">설치 문서</a>
+      </div>
+    </div>
+
+    <div class="brand-panel" aria-label="Kawaikara" data-reveal style="--reveal-delay: 100ms">
+      <BrandMark size="large" />
+      <span>Open source desktop viewer</span>
+    </div>
+  </section>
+
+  <section class="extension-intro" aria-labelledby="extension-title" data-reveal>
+    <div class="extension-copy">
+      <span class="eyebrow">Browser extension</span>
+      <h2 id="extension-title">Kawaikara에 유용한 확장</h2>
+      <p>웹 페이지와 영상 링크를 Kawaikara로 전달할 수 있는 Chrome·Firefox 확장입니다.</p>
+    </div>
+    <div class="extension-actions">
+      <a class="button button--primary" href="/docs/extension/"><Puzzle size={18} /> 확장 설치</a>
+      <a class="text-link" href="/extension/">소개 보기 <ArrowUpRight size={16} /></a>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .download-hero {
+    align-items: center;
+    display: grid;
+    gap: clamp(3rem, 8vw, 8rem);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.72fr);
+    min-height: calc(100vh - 4.5rem);
+    padding: clamp(5rem, 11vw, 10rem) clamp(1.1rem, 7vw, 8rem);
+  }
+
+  .hero-copy { max-width: 48rem; }
+
+  h1 {
+    font-size: clamp(4rem, 11vw, 10rem);
+    letter-spacing: -0.075em;
+    line-height: 0.9;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .hero-copy > p,
+  .extension-copy p {
+    color: var(--kc-muted);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.75;
+    max-width: 39rem;
+  }
+
+  .hero-actions,
+  .extension-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  .hero-actions { margin-top: 2.5rem; }
+
+  .brand-panel {
+    align-items: center;
+    aspect-ratio: 1;
+    background:
+      radial-gradient(circle at center, rgb(173 146 255 / 16%), transparent 54%),
+      var(--kc-surface-raised);
+    border: 1px solid var(--kc-border);
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    min-height: 24rem;
+  }
+
+  .brand-panel span {
+    color: var(--kc-muted);
+    font-family: var(--kc-font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .extension-intro {
+    align-items: end;
+    border-bottom: 1px solid var(--kc-border);
+    border-top: 1px solid var(--kc-border);
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin: 0 clamp(1.1rem, 4vw, 4rem) 4rem;
+    padding: clamp(3rem, 7vw, 6rem);
+  }
+
+  .extension-copy h2 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    letter-spacing: -0.06em;
+    line-height: 1;
+    margin: 1.25rem 0;
+  }
+
+  .text-link {
+    align-items: center;
+    color: var(--kc-text);
+    display: inline-flex;
+    font-weight: 750;
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+
+  .text-link:hover { color: var(--kc-accent); }
+
+  @media (max-width: 860px) {
+    .download-hero,
+    .extension-intro { grid-template-columns: 1fr; }
+    .download-hero { min-height: auto; }
+    .brand-panel { aspect-ratio: 5 / 3; min-height: 20rem; }
+  }
+
+  @media (max-width: 520px) {
+    .download-hero { padding-top: 4rem; }
+    .brand-panel { min-height: 17rem; }
+    .extension-intro { margin-bottom: 1.1rem; }
+  }
+</style>

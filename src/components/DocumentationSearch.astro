@@ -1,0 +1,337 @@
+---
+import { Search, X } from '@lucide/astro';
+
+interface Props {
+  versionId?: string;
+}
+
+const { versionId } = Astro.props;
+---
+
+<div class="documentation-search" data-documentation-search data-version-id={versionId}>
+  <button
+    class="search-trigger"
+    type="button"
+    aria-label="문서와 API 검색"
+    data-i18n-aria="docs.search.open"
+    data-search-open
+  >
+    <Search size={15} />
+    <span data-i18n="docs.search.label">검색</span>
+    <kbd>⌘K</kbd>
+  </button>
+
+  <dialog class="search-dialog" data-search-dialog aria-label="문서와 API 검색" data-i18n-aria="docs.search.open">
+    <div class="search-panel">
+      <div class="search-input-row">
+        <Search size={18} aria-hidden="true" />
+        <input
+          type="search"
+          autocomplete="off"
+          placeholder="문서, 클래스, 함수, 타입 검색"
+          data-i18n-placeholder="docs.search.placeholder"
+          data-search-input
+        />
+        <button class="search-close" type="button" aria-label="검색 닫기" data-i18n-aria="docs.search.close" data-search-close>
+          <X size={17} />
+        </button>
+      </div>
+      <p class="search-status" data-search-status data-i18n="docs.search.hint" aria-live="polite">검색어를 입력하세요.</p>
+      <ul class="search-results" data-search-results aria-label="검색 결과"></ul>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  import { normalizeLocale, translate } from '../i18n/messages';
+  import { translateDocumentationKind, translateDocumentationText } from '../i18n/documentation';
+
+  interface SearchRecord {
+    category?: string;
+    channel: string;
+    description?: string;
+    href: string;
+    kind: string;
+    path?: string;
+    section: string;
+    title: string;
+    version: string;
+    versionId: string;
+  }
+
+  let indexPromise: Promise<SearchRecord[]> | undefined;
+  const loadIndex = () => {
+    indexPromise ??= fetch('/docs-search.json')
+      .then((response) => {
+        if (!response.ok) throw new Error(`Search index request failed: ${response.status}`);
+        return response.json() as Promise<SearchRecord[]>;
+      });
+    return indexPromise;
+  };
+
+  const normalize = (value: string) => value.normalize('NFKC').toLocaleLowerCase();
+
+  type SearchRuntimeWindow = Window & { __kawaikaraSearchRuntime?: boolean };
+  const searchWindow = window as SearchRuntimeWindow;
+
+  function initializeSearch(root: HTMLElement): void {
+    if (root.dataset.searchBound === 'true') return;
+    const dialog = root.querySelector<HTMLDialogElement>('[data-search-dialog]');
+    const input = root.querySelector<HTMLInputElement>('[data-search-input]');
+    const results = root.querySelector<HTMLUListElement>('[data-search-results]');
+    const status = root.querySelector<HTMLElement>('[data-search-status]');
+    const versionId = root.dataset.versionId;
+    if (!dialog || !input || !results || !status) return;
+    root.dataset.searchBound = 'true';
+
+    const locale = () => normalizeLocale(document.documentElement.dataset.locale) ?? 'ko';
+    const setStatus = (key: string, count?: number) => {
+      status.textContent = count === undefined
+        ? translate(locale(), key)
+        : translate(locale(), key, { count });
+    };
+
+    const renderResults = (records: SearchRecord[], query: string) => {
+      results.replaceChildren();
+      const terms = normalize(query).split(/\s+/).filter(Boolean);
+      if (terms.length === 0) {
+        setStatus('docs.search.hint');
+        return;
+      }
+
+      const matches = records
+        .map((record) => {
+          const title = normalize(record.title);
+          const searchable = normalize([
+            record.title,
+            record.description,
+            record.path,
+            record.category,
+            record.kind,
+          ].filter(Boolean).join(' '));
+          if (!terms.every((term) => searchable.includes(term))) return undefined;
+          let score = record.versionId === versionId ? 30 : 0;
+          if (title === terms.join(' ')) score += 100;
+          else if (title.startsWith(terms[0])) score += 60;
+          else if (title.includes(terms[0])) score += 35;
+          if (record.kind === 'Class' || record.kind === 'Interface') score += 8;
+          return { record, score };
+        })
+        .filter((match): match is { record: SearchRecord; score: number } => Boolean(match))
+        .sort((left, right) => right.score - left.score || left.record.title.localeCompare(right.record.title))
+        .slice(0, 12);
+
+      if (matches.length === 0) {
+        setStatus('docs.search.empty');
+        return;
+      }
+
+      setStatus('docs.search.count', matches.length);
+      for (const { record } of matches) {
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        const heading = document.createElement('div');
+        const title = document.createElement('strong');
+        const kind = document.createElement('span');
+        const description = document.createElement('span');
+        const metadata = document.createElement('div');
+        const path = document.createElement('small');
+        const version = document.createElement('small');
+        const kindSlug = record.kind.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        item.className = 'search-result';
+        link.href = record.href;
+        link.className = 'search-result-link';
+        if (record.versionId === 'docs') link.dataset.astroReload = '';
+        heading.className = 'search-result-heading';
+        title.textContent = record.title;
+        kind.className = `search-result-kind search-result-kind--${kindSlug}`;
+        kind.textContent = translateDocumentationKind(locale(), record.kind);
+        description.className = 'search-result-description';
+        description.textContent = translateDocumentationText(
+          locale(),
+          record.description || record.path || record.category || '',
+        );
+        metadata.className = 'search-result-metadata';
+        path.className = 'search-result-path';
+        path.textContent = record.path || record.category || record.section;
+        version.className = 'search-result-version';
+        version.textContent = record.versionId === 'docs'
+          ? 'Introduction'
+          : `${record.channel} · ${record.version}`;
+        if (record.versionId === versionId) version.dataset.current = 'true';
+        heading.append(title, kind);
+        metadata.append(path, version);
+        link.append(heading, description, metadata);
+        item.append(link);
+        results.append(item);
+      }
+    };
+
+    const open = async () => {
+      if (!dialog.open) dialog.showModal();
+      input.focus();
+      setStatus('docs.search.loading');
+      try {
+        const records = await loadIndex();
+        renderResults(records, input.value);
+      } catch {
+        setStatus('docs.search.error');
+      }
+    };
+
+    root.querySelector('[data-search-open]')?.addEventListener('click', () => void open());
+    root.querySelector('[data-search-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    input.addEventListener('input', async () => {
+      try {
+        renderResults(await loadIndex(), input.value);
+      } catch {
+        setStatus('docs.search.error');
+      }
+    });
+
+  }
+
+  function initializeSearchRoots(): void {
+    document.querySelectorAll<HTMLElement>('[data-documentation-search]').forEach(initializeSearch);
+  }
+
+  if (!searchWindow.__kawaikaraSearchRuntime) {
+    searchWindow.__kawaikaraSearchRuntime = true;
+    document.addEventListener('astro:page-load', initializeSearchRoots);
+    document.addEventListener('keydown', (event) => {
+      const target = event.target as HTMLElement | null;
+      const editable = target?.matches('input, textarea, select, [contenteditable="true"]');
+      if ((event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey))
+        || (event.key === '/' && !editable)) {
+        event.preventDefault();
+        document.querySelector<HTMLButtonElement>('[data-documentation-search] [data-search-open]')?.click();
+      }
+    });
+  }
+  initializeSearchRoots();
+</script>
+
+<style>
+  .search-trigger {
+    align-items: center;
+    appearance: none;
+    background: var(--kc-surface-raised);
+    border: 1px solid var(--kc-border);
+    border-radius: 999px;
+    color: var(--kc-muted);
+    cursor: pointer;
+    display: inline-flex;
+    font: 700 0.75rem var(--kc-font-sans);
+    gap: 0.45rem;
+    height: var(--kc-header-control-height, 2.3rem);
+    min-height: var(--kc-header-control-height, 2.3rem);
+    padding: 0.4rem 0.55rem 0.4rem 0.75rem;
+  }
+  .search-trigger:hover { border-color: var(--kc-violet); color: var(--kc-text); }
+  .search-trigger kbd {
+    background: rgb(255 255 255 / 5%);
+    border: 1px solid var(--kc-border);
+    border-radius: 0.35rem;
+    color: var(--kc-muted);
+    font: 650 0.58rem var(--kc-font-mono);
+    padding: 0.18rem 0.3rem;
+  }
+  .search-dialog {
+    background: transparent;
+    border: 0;
+    color: var(--kc-text);
+    height: 100%;
+    margin: 0;
+    max-height: none;
+    max-width: none;
+    padding: min(11vh, 6.5rem) 1rem 1rem;
+    width: 100%;
+  }
+  .search-dialog::backdrop { backdrop-filter: blur(8px); background: rgb(4 3 7 / 72%); }
+  .search-panel {
+    background:
+      radial-gradient(circle at 8% 0%, rgb(173 146 255 / 10%), transparent 42%),
+      #111019;
+    border: 1px solid var(--kc-border);
+    border-radius: 1.1rem;
+    box-shadow: 0 2rem 6rem rgb(0 0 0 / 62%), 0 0 0 1px rgb(255 255 255 / 2%) inset;
+    margin: 0 auto;
+    max-width: 44rem;
+    overflow: hidden;
+  }
+  .search-input-row { align-items: center; border-bottom: 1px solid var(--kc-border); display: flex; gap: 0.75rem; min-height: 4rem; padding: 0.75rem 0.9rem 0.75rem 1.1rem; }
+  .search-input-row > svg { color: var(--kc-violet); flex: 0 0 auto; }
+  .search-input-row input {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--kc-text);
+    flex: 1;
+    font: 700 1rem var(--kc-font-sans);
+    min-width: 0;
+    outline: 0;
+    padding: 0.35rem 0;
+  }
+  .search-input-row input::-webkit-search-cancel-button { display: none; }
+  .search-input-row input::placeholder { color: var(--kc-muted); }
+  .search-close { align-items: center; background: transparent; border: 0; border-radius: 0.45rem; color: var(--kc-muted); cursor: pointer; display: inline-flex; padding: 0.4rem; }
+  .search-close:hover { background: var(--kc-surface-raised); color: var(--kc-text); }
+  .search-status { color: var(--kc-muted); font: 650 0.66rem var(--kc-font-mono); letter-spacing: 0.025em; margin: 0; padding: 0.8rem 1.1rem 0.45rem; text-transform: uppercase; }
+  .search-results { list-style: none; margin: 0; max-height: min(58vh, 34rem); overflow-y: auto; padding: 0.35rem 0.65rem 0.75rem; scrollbar-color: var(--kc-border) transparent; scrollbar-width: thin; }
+  .search-results :global(.search-result + .search-result) { margin-top: 0.3rem; }
+  .search-results :global(.search-result-link) {
+    background: rgb(255 255 255 / 1.5%);
+    border: 1px solid transparent;
+    border-radius: 0.85rem;
+    color: var(--kc-text);
+    display: grid;
+    gap: 0.48rem;
+    padding: 0.9rem 0.95rem 0.85rem;
+    text-decoration: none;
+    transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
+  }
+  .search-results :global(.search-result-link:hover),
+  .search-results :global(.search-result-link:focus-visible) {
+    background: linear-gradient(110deg, rgb(173 146 255 / 11%), rgb(255 122 80 / 5%));
+    border-color: rgb(173 146 255 / 42%);
+    outline: 0;
+    transform: translateY(-1px);
+  }
+  .search-results :global(.search-result-heading) { align-items: center; display: flex; gap: 0.55rem; min-width: 0; }
+  .search-results :global(.search-result-heading strong) { font-size: 0.9rem; line-height: 1.35; overflow-wrap: anywhere; }
+  .search-results :global(.search-result-kind) {
+    background: rgb(173 146 255 / 12%);
+    border: 1px solid rgb(173 146 255 / 30%);
+    border-radius: 999px;
+    color: #cbbcff;
+    flex: 0 0 auto;
+    font: 750 0.55rem var(--kc-font-mono);
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.4rem;
+    text-transform: uppercase;
+  }
+  .search-results :global(.search-result-kind--class) { background: rgb(255 122 80 / 11%); border-color: rgb(255 122 80 / 32%); color: #ffac91; }
+  .search-results :global(.search-result-kind--function) { background: rgb(201 255 104 / 9%); border-color: rgb(201 255 104 / 28%); color: var(--kc-lime); }
+  .search-results :global(.search-result-kind--interface) { background: rgb(119 238 220 / 9%); border-color: rgb(119 238 220 / 28%); color: #77eedc; }
+  .search-results :global(.search-result-description) { color: var(--kc-muted); font-size: 0.75rem; line-height: 1.5; overflow-wrap: anywhere; }
+  .search-results :global(.search-result-metadata) { align-items: center; display: flex; gap: 0.65rem; justify-content: space-between; min-width: 0; }
+  .search-results :global(.search-result-path) { color: #777182; font: 600 0.59rem var(--kc-font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .search-results :global(.search-result-version) {
+    border: 1px solid var(--kc-border);
+    border-radius: 999px;
+    color: var(--kc-muted);
+    flex: 0 0 auto;
+    font: 700 0.56rem var(--kc-font-mono);
+    padding: 0.2rem 0.42rem;
+  }
+  .search-results :global(.search-result-version[data-current="true"]) { border-color: rgb(119 238 220 / 25%); color: #77eedc; }
+
+  @media (max-width: 940px) {
+    .search-trigger span,
+    .search-trigger kbd { display: none; }
+    .search-trigger { justify-content: center; padding: 0.45rem; width: 2.3rem; }
+  }
+</style>

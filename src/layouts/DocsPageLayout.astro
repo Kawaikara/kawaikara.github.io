@@ -1,0 +1,550 @@
+---
+import { BlankLayout, PersistentDocsShell } from 'kawaichen';
+import { ClientRouter } from 'astro:transitions';
+import KawaikaraHeader from '../components/KawaikaraHeader.astro';
+import LocaleHead from '../components/LocaleHead.astro';
+import LocaleRuntime from '../components/LocaleRuntime.astro';
+import {
+  defaultDocumentationVersion,
+  getReferenceRoot,
+  hasSection,
+  type DocumentationNavigationGroup,
+  type DocumentationSection,
+  type DocumentationVersion,
+} from '../data/documentation';
+import '../styles/site.css';
+
+interface PageMetadata {
+  title?: string;
+  description?: string;
+  titleKey?: string;
+  descriptionKey?: string;
+  documentationLocale?: 'ko' | 'ja';
+  documentationLocalePaths?: Partial<Record<'ko' | 'en' | 'ja', string>>;
+  documentationVersion?: DocumentationVersion;
+  documentationSection?: DocumentationSection;
+  headings?: Array<{ depth: number; slug: string; text: string }>;
+  referenceCategory?: string;
+  referenceDescription?: string;
+  referenceKind?: string;
+  referencePath?: string;
+  referenceTitle?: string;
+}
+
+interface Props extends PageMetadata {
+  frontmatter?: PageMetadata;
+}
+
+const suppliedProps = Astro.props as Props;
+const metadata = suppliedProps.frontmatter
+  ? { ...suppliedProps, ...suppliedProps.frontmatter }
+  : suppliedProps;
+const {
+  title = 'Kawaikara Docs',
+  description = 'Kawaikara documentation',
+  titleKey,
+  descriptionKey,
+  documentationLocale,
+  documentationLocalePaths,
+  documentationVersion = defaultDocumentationVersion,
+  documentationSection = 'app-design',
+  headings = [],
+  referenceCategory,
+  referenceDescription,
+  referenceKind,
+  referencePath,
+  referenceTitle,
+} = metadata;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL('/og.png', Astro.site);
+const currentPath = Astro.url.pathname;
+const tocHeadings = headings.filter(({ depth }) => depth === 2 || depth === 3);
+const kindClass = referenceKind?.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const isReferenceOverview = referenceKind === 'Overview';
+const referenceDescriptionKey = isReferenceOverview
+  ? documentationSection === 'app-api'
+    ? 'docs.api.overview.app'
+    : documentationSection === 'builtin-sites'
+      ? 'docs.api.overview.builtin'
+      : documentationSection === 'site-api'
+        ? 'docs.api.overview.site'
+        : undefined
+  : undefined;
+const navigation = documentationVersion?.navigation ?? {};
+const builtinBundle = documentationVersion?.bundles?.find(({ builtin }) => builtin);
+
+const sectionRoots = documentationVersion ? {
+  appDesign: hasSection(documentationVersion, 'app-design')
+    ? getReferenceRoot(documentationVersion, 'app-design')
+    : undefined,
+  appApi: hasSection(documentationVersion, 'app-api')
+    ? getReferenceRoot(documentationVersion, 'app-api')
+    : undefined,
+  builtinSites: hasSection(documentationVersion, 'builtin-sites')
+    ? getReferenceRoot(documentationVersion, 'builtin-sites')
+    : undefined,
+  siteApi: hasSection(documentationVersion, 'site-api')
+    ? getReferenceRoot(documentationVersion, 'site-api')
+    : undefined,
+} : {};
+
+const isActive = (href: string) => currentPath === href;
+const sectionIsActive = (href: string | undefined) => Boolean(
+  href && (currentPath === href || currentPath.startsWith(href)),
+);
+
+function groupsFor(section: DocumentationSection): DocumentationNavigationGroup[] {
+  return navigation[section] ?? [];
+}
+---
+
+<BlankLayout {title} {description} lang="ko">
+  <Fragment slot="head">
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kawaikara" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0a090f" />
+    <LocaleHead {documentationLocale} />
+    <ClientRouter fallback="swap" />
+  </Fragment>
+
+  <KawaikaraHeader {documentationVersion} {documentationSection} />
+
+  <PersistentDocsShell
+    navigationAriaLabel="문서 목차"
+    navigationPersistenceKey={`documentation-navigation-${documentationVersion.id}`}
+    scrollStorageKey={documentationVersion.id}
+    tocAriaLabel="내용 내부 인덱스"
+  >
+      <nav class="docs-navigation" slot="navigation">
+        <section>
+          <h2 data-i18n="docs.layout.introduction">Introduction</h2>
+          <ul>
+            <li><a href="/docs/" aria-current={isActive('/docs/') ? 'page' : undefined} data-i18n="docs.layout.home" data-astro-reload>문서 홈</a></li>
+            <li><a href="/docs/install/" aria-current={isActive('/docs/install/') ? 'page' : undefined} data-i18n="docs.layout.install" data-astro-reload>설치</a></li>
+            <li><a href="/docs/yt-downloader/" aria-current={isActive('/docs/yt-downloader/') ? 'page' : undefined} data-i18n="docs.layout.download" data-astro-reload>다운로드</a></li>
+            <li><a href="/docs/extension/" aria-current={isActive('/docs/extension/') ? 'page' : undefined} data-i18n="docs.layout.extensions" data-astro-reload>유용한 확장</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>APP</h2>
+          {groupsFor('app-design').length > 0 ? (
+            <ul>
+              {groupsFor('app-design').flatMap((group) => group.items).map((item) => (
+                <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} data-i18n={item.title === 'Overview' ? 'docs.api.overview.label' : undefined} data-doc-i18n>{item.title}</a></li>
+              ))}
+            </ul>
+          ) : (
+            <ul>
+              <li>{sectionRoots.appDesign
+                ? <a href={sectionRoots.appDesign} aria-current={sectionIsActive(sectionRoots.appDesign) ? 'page' : undefined} data-i18n="docs.layout.design">설계 문서</a>
+                : <span data-i18n="docs.layout.unavailable">이 버전에는 없음</span>}</li>
+            </ul>
+          )}
+        </section>
+
+        <section>
+          <h2>Source API</h2>
+          {groupsFor('app-api').length > 0 ? groupsFor('app-api').map((group) => (
+            <div class="navigation-group">
+              {group.title !== 'Source API' && <p data-doc-i18n>{group.title}</p>}
+              <ul>
+                {group.items.map((item) => (
+                  <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} data-i18n={item.title === 'Overview' ? 'docs.api.overview.label' : undefined} data-doc-i18n>{item.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          )) : (
+            <ul>
+              <li>{sectionRoots.appApi
+                ? <a href={sectionRoots.appApi} aria-current={sectionIsActive(sectionRoots.appApi) ? 'page' : undefined} data-i18n="docs.layout.fullReference">전체 레퍼런스</a>
+                : <span data-i18n="docs.layout.unavailable">이 버전에는 없음</span>}</li>
+            </ul>
+          )}
+        </section>
+
+        <section>
+          <h2>Built-in Sites</h2>
+          {builtinBundle && <p class="section-version" title={builtinBundle.id}>v{builtinBundle.version}</p>}
+          {groupsFor('builtin-sites').length > 0 ? groupsFor('builtin-sites').map((group) => (
+            <div class="navigation-group">
+              {group.title !== 'Built-in Sites' && <p data-doc-i18n>{group.title}</p>}
+              <ul>
+                {group.items.map((item) => (
+                  <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} data-i18n={item.title === 'Overview' ? 'docs.api.overview.label' : undefined} data-doc-i18n>{item.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          )) : (
+            <ul>
+              <li>{sectionRoots.builtinSites
+                ? <a href={sectionRoots.builtinSites} aria-current={sectionIsActive(sectionRoots.builtinSites) ? 'page' : undefined}>Provider & Bundle</a>
+                : <span data-i18n="docs.layout.unavailable">이 버전에는 없음</span>}</li>
+            </ul>
+          )}
+        </section>
+
+        <section>
+          <h2>Site API</h2>
+          {documentationVersion?.siteApiVersion && <p class="section-version">v{documentationVersion.siteApiVersion}</p>}
+          {groupsFor('site-api').length > 0 ? groupsFor('site-api').map((group) => (
+            <div class="navigation-group">
+              {group.title !== 'Site API' && <p data-doc-i18n>{group.title}</p>}
+              <ul>
+                {group.items.map((item) => (
+                  <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} data-i18n={item.title === 'Overview' ? 'docs.api.overview.label' : undefined} data-doc-i18n>{item.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          )) : (
+            <ul>
+              <li>{sectionRoots.siteApi
+                ? <a href={sectionRoots.siteApi} aria-current={sectionIsActive(sectionRoots.siteApi) ? 'page' : undefined}>API Reference</a>
+                : <span data-i18n="docs.layout.unavailable">이 버전에는 없음</span>}</li>
+            </ul>
+          )}
+        </section>
+      </nav>
+
+        <aside class="translation-fallback" data-translation-fallback hidden></aside>
+
+        {referenceTitle && (
+          <header class="reference-hero">
+            <div class="reference-meta">
+              {referenceKind && <span
+                class:list={['reference-kind', kindClass && `reference-kind--${kindClass}`]}
+                data-i18n={isReferenceOverview ? 'docs.api.overview.label' : undefined}
+                data-doc-i18n
+              >{referenceKind}</span>}
+              {referenceCategory && !isReferenceOverview && <span class="reference-category">{referenceCategory}</span>}
+            </div>
+            <h1 data-doc-i18n>{referenceTitle}</h1>
+            {referenceDescription && <p data-i18n={referenceDescriptionKey} data-doc-i18n>{referenceDescription}</p>}
+            {referencePath && <div class="reference-path" aria-label="소스 경로">{referencePath}</div>}
+          </header>
+        )}
+        <slot />
+
+      <nav slot="toc">
+        <strong data-i18n="docs.layout.index">INDEX</strong>
+        {tocHeadings.length > 0 ? (
+          <ul>
+            {tocHeadings.map((heading) => (
+              <li class:list={{ nested: heading.depth === 3 }}>
+                <a href={`#${heading.slug}`} data-doc-i18n>{heading.text}</a>
+              </li>
+            ))}
+          </ul>
+        ) : <p data-i18n="docs.layout.noIndex">이 페이지에는 하위 항목이 없습니다.</p>}
+      </nav>
+  </PersistentDocsShell>
+
+  <LocaleRuntime
+    {titleKey}
+    {descriptionKey}
+    {documentationLocale}
+    {documentationLocalePaths}
+    {documentationSection}
+  />
+  <script>
+    type DocsRuntimeWindow = Window & {
+      __kawaikaraMermaidRuntime?: boolean;
+      __kawaikaraMermaidPromise?: Promise<typeof import('mermaid')['default']>;
+    };
+
+    const docsWindow = window as DocsRuntimeWindow;
+
+    async function renderMermaidDiagrams(): Promise<void> {
+      const diagramBlocks = [...document.querySelectorAll<HTMLElement>(
+        'pre[data-language="mermaid"] > code, pre > code.language-mermaid',
+      )];
+      if (diagramBlocks.length === 0) return;
+
+      docsWindow.__kawaikaraMermaidPromise ??= import('mermaid').then(({ default: mermaid }) => {
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'strict',
+          theme: 'dark',
+          flowchart: { htmlLabels: true, curve: 'basis' },
+          themeVariables: {
+            background: '#0a090f',
+            primaryColor: '#211d2d',
+            primaryBorderColor: '#ad92ff',
+            primaryTextColor: '#fbf9ff',
+            lineColor: '#aaa4b8',
+            secondaryColor: '#2e1b1c',
+            tertiaryColor: '#15131d',
+          },
+        });
+        return mermaid;
+      });
+      const mermaid = await docsWindow.__kawaikaraMermaidPromise;
+      const diagrams = diagramBlocks.map((code) => {
+        const highlightedLines = [...code.querySelectorAll<HTMLElement>('.line')];
+        const source = highlightedLines.length > 0
+          ? highlightedLines.map((line) => line.textContent ?? '').join('\n')
+          : code.textContent ?? '';
+        const diagram = document.createElement('div');
+        diagram.className = 'mermaid kc-mermaid';
+        diagram.setAttribute('role', 'img');
+        diagram.setAttribute('aria-label', '문서 흐름도');
+        diagram.textContent = source;
+        code.parentElement?.replaceWith(diagram);
+        return diagram;
+      });
+
+      await Promise.all(diagrams.map(async (diagram) => {
+        try {
+          await mermaid.run({ nodes: [diagram] });
+        } catch (error) {
+          console.error('Mermaid diagram rendering failed.', error);
+          const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+          diagram.classList.add('kc-mermaid--error');
+          diagram.dataset.mermaidError = message;
+        }
+      }));
+    }
+
+    if (!docsWindow.__kawaikaraMermaidRuntime) {
+      docsWindow.__kawaikaraMermaidRuntime = true;
+      document.addEventListener('astro:page-load', () => void renderMermaidDiagrams());
+    }
+
+    void renderMermaidDiagrams();
+  </script>
+</BlankLayout>
+
+<style is:global>
+  .kc-docs-shell { --kc-docs-header-offset: 4.5rem; }
+
+  .docs-navigation section + section { margin-top: 2rem; }
+  .docs-navigation h2,
+  .docs-navigation h3 {
+    border: 0;
+    font-family: var(--kc-font-mono);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  .docs-navigation h2 {
+    color: var(--kc-text);
+    font-size: 0.68rem;
+    margin: 0 0 0.55rem;
+    padding: 0 0.65rem;
+  }
+  .docs-navigation h3 {
+    color: var(--kc-muted);
+    font-size: 0.58rem;
+    margin: 0.85rem 0 0.3rem;
+    padding: 0 0.65rem;
+  }
+  .docs-navigation .navigation-group + .navigation-group { margin-top: 0.65rem; }
+  .docs-navigation .navigation-group > p {
+    color: var(--kc-muted);
+    font: 750 0.58rem var(--kc-font-mono);
+    letter-spacing: 0.06em;
+    margin: 0 0 0.2rem;
+    padding: 0 0.65rem;
+    text-transform: uppercase;
+  }
+  .docs-navigation .section-version {
+    color: var(--kc-muted);
+    font: 700 0.6rem var(--kc-font-mono);
+    margin: -1.4rem 0.65rem 0.5rem auto;
+    text-align: right;
+  }
+  .docs-navigation ul { list-style: none; margin: 0; padding: 0; }
+  .docs-navigation a,
+  .docs-navigation li > span {
+    border-radius: 0.55rem;
+    color: var(--kc-muted);
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    padding: 0.42rem 0.65rem;
+    text-decoration: none;
+  }
+  .docs-navigation li > span { opacity: 0.45; }
+  .docs-navigation a:hover,
+  .docs-navigation a[aria-current='page'] {
+    background: var(--kc-surface-raised);
+    color: var(--kc-accent);
+  }
+
+  .kc-toc strong {
+    color: var(--kc-text);
+    font: 800 0.66rem var(--kc-font-mono);
+    letter-spacing: 0.12em;
+  }
+  .kc-toc nav > p { color: var(--kc-muted); font-size: 0.7rem; line-height: 1.5; }
+  .kc-toc ul { list-style: none; margin: 0.9rem 0 0; padding: 0; }
+  .kc-toc li { margin: 0.42rem 0; }
+  .kc-toc li.nested { padding-left: 0.75rem; }
+  .kc-toc a { color: var(--kc-muted); font-size: 0.73rem; line-height: 1.45; text-decoration: none; }
+  .kc-toc a:hover { color: var(--kc-text); }
+
+  .reference-hero {
+    background: linear-gradient(135deg, rgb(173 146 255 / 12%), rgb(255 122 80 / 5%));
+    border: 1px solid var(--kc-border);
+    border-radius: 1.25rem;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    padding: clamp(1.4rem, 4vw, 2.25rem);
+    position: relative;
+  }
+  .translation-fallback {
+    background: color-mix(in srgb, var(--kc-accent) 9%, var(--kc-surface-raised));
+    border: 1px solid color-mix(in srgb, var(--kc-accent) 35%, var(--kc-border));
+    border-radius: 0.85rem;
+    color: var(--kc-muted);
+    font-size: 0.84rem;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    padding: 0.8rem 1rem;
+  }
+  .reference-hero::before {
+    background: var(--kc-violet);
+    content: '';
+    height: 3px;
+    inset: 0 0 auto;
+    position: absolute;
+  }
+  .reference-meta { align-items: center; display: flex; flex-wrap: wrap; gap: 0.65rem; }
+  .reference-kind {
+    background: rgb(173 146 255 / 16%);
+    border: 1px solid rgb(173 146 255 / 45%);
+    border-radius: 999px;
+    color: #c7b7ff;
+    font: 850 0.62rem var(--kc-font-mono);
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.58rem;
+    text-transform: uppercase;
+  }
+  .reference-kind--interface { background: rgb(94 234 212 / 12%); border-color: rgb(94 234 212 / 38%); color: #77eedc; }
+  .reference-kind--class { background: rgb(173 146 255 / 14%); border-color: rgb(173 146 255 / 45%); color: #c7b7ff; }
+  .reference-kind--function,
+  .reference-kind--method { background: rgb(201 255 104 / 11%); border-color: rgb(201 255 104 / 38%); color: var(--kc-lime); }
+  .reference-kind--variable,
+  .reference-kind--property { background: rgb(255 171 64 / 12%); border-color: rgb(255 171 64 / 42%); color: #ffbd68; }
+  .reference-kind--type-alias,
+  .reference-kind--enumeration { background: rgb(255 122 181 / 12%); border-color: rgb(255 122 181 / 40%); color: #ff94c5; }
+  .reference-kind--module { background: rgb(158 154 170 / 12%); border-color: rgb(158 154 170 / 34%); color: #c6c2ce; }
+  .reference-kind--guide { background: rgb(255 122 80 / 13%); border-color: rgb(255 122 80 / 42%); color: #ff9a77; }
+  .reference-category { color: var(--kc-muted); font: 700 0.7rem var(--kc-font-mono); }
+  .reference-hero h1 {
+    font-size: clamp(2rem, 4.2vw, 2.75rem);
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+    margin: 1rem 0 0;
+    overflow-wrap: anywhere;
+  }
+  .reference-hero > p { color: var(--kc-muted); font-size: 1rem; line-height: 1.7; margin: 1rem 0 0; max-width: 48rem; }
+  .reference-path {
+    border-top: 1px solid var(--kc-border);
+    color: var(--kc-muted);
+    font: 650 0.72rem/1.5 var(--kc-font-mono);
+    margin-top: 1.35rem;
+    overflow-wrap: anywhere;
+    padding-top: 1rem;
+  }
+
+  .kc-prose { line-height: 1.75; user-select: text; }
+  .kc-prose > h1 { font-size: clamp(2rem, 6vw, 3.25rem); letter-spacing: -0.04em; line-height: 1.08; margin: 0 0 1.5rem; }
+  .kc-prose h2 { border-top: 1px solid var(--kc-border); font-size: 1.45rem; margin-top: 3rem; padding-top: 2rem; }
+  .kc-prose h3 { font-size: 1.12rem; margin-top: 2rem; }
+  .kc-prose p,
+  .kc-prose li { color: var(--kc-muted); }
+  .kc-prose a { color: var(--kc-accent); overflow-wrap: anywhere; }
+  .kc-prose code,
+  .kc-prose kbd { background: var(--kc-accent-soft); border-radius: 0.3rem; font-family: var(--kc-font-mono); padding: 0.15rem 0.35rem; }
+  .kc-prose pre { background: var(--kc-surface-raised); border: 1px solid var(--kc-border); border-radius: var(--kc-radius); overflow: auto; padding: 1rem; }
+  .kc-prose pre code { background: none; padding: 0; }
+  .kc-prose .kc-mermaid {
+    align-items: center;
+    background: rgb(21 19 29 / 82%);
+    border: 1px solid var(--kc-border);
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0 2.25rem;
+    min-height: 10rem;
+    overflow-x: auto;
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+  .kc-prose .kc-mermaid svg { height: auto; max-width: 100%; }
+  .kc-prose .kc-mermaid--error {
+    color: #ff9a77;
+    display: block;
+    font-family: var(--kc-font-mono);
+    white-space: pre-wrap;
+  }
+  .kc-prose table { border-collapse: collapse; display: block; overflow-x: auto; width: 100%; }
+  .kc-prose th,
+  .kc-prose td { border: 1px solid var(--kc-border); padding: 0.55rem 0.75rem; text-align: left; }
+  .kc-prose blockquote { border-left: 3px solid var(--kc-violet); margin-left: 0; padding-left: 1rem; }
+  .kc-prose .type-reference {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 0.15rem;
+  }
+  .kc-prose .type-reference-label {
+    background: rgb(94 234 212 / 11%);
+    border: 1px solid rgb(94 234 212 / 34%);
+    border-radius: 999px;
+    color: #77eedc;
+    font: 850 0.58rem var(--kc-font-mono);
+    letter-spacing: 0.07em;
+    padding: 0.28rem 0.48rem;
+  }
+  .kc-prose .type-reference-link { text-decoration: none; }
+  .kc-prose .type-reference-link:hover code { outline: 1px solid var(--kc-accent); }
+  .kc-prose hr { border: 0; border-top: 1px solid var(--kc-border); margin: 2rem 0; }
+  .kc-prose .doc-lead { color: var(--kc-text); font-size: 1.15rem; line-height: 1.75; max-width: 42rem; }
+  .kc-prose .doc-grid { display: grid; gap: 0.85rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; }
+  .kc-prose .doc-card { background: var(--kc-surface-raised); border: 1px solid var(--kc-border); border-radius: 1rem; color: var(--kc-text); display: block; padding: 1.3rem; text-decoration: none; }
+  .kc-prose .doc-card:hover { border-color: var(--kc-violet); }
+  .kc-prose .doc-card strong { display: block; font-size: 1.05rem; }
+  .kc-prose .doc-card span { color: var(--kc-muted); display: block; font-size: 0.85rem; line-height: 1.55; margin-top: 0.45rem; }
+  .kc-prose .doc-card--disabled { opacity: 0.48; }
+  .kc-prose .api-category-grid {
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 1.25rem 0 2.5rem;
+  }
+  .kc-prose .api-category-card {
+    background: linear-gradient(135deg, rgb(173 146 255 / 9%), rgb(21 19 29 / 92%));
+    border: 1px solid var(--kc-border);
+    border-radius: 0.9rem;
+    display: grid;
+    gap: 0.45rem;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+  }
+  .kc-prose .api-category-card:hover { border-color: var(--kc-violet); transform: translateY(-1px); }
+  .kc-prose .api-category-card strong { color: var(--kc-text); font-size: 0.92rem; }
+  .kc-prose .api-category-card span { color: var(--kc-muted); font-size: 0.75rem; line-height: 1.5; }
+  .kc-prose .api-category-card small { color: #77eedc; font: 650 0.6rem/1.5 var(--kc-font-mono); }
+  .kc-prose .steps { counter-reset: docs-step; display: grid; gap: 0.8rem; list-style: none; padding: 0; }
+  .kc-prose .steps li { background: var(--kc-surface-raised); border: 1px solid var(--kc-border); border-radius: 0.9rem; counter-increment: docs-step; padding: 1rem 1.15rem 1rem 3.5rem; position: relative; }
+  .kc-prose .steps li::before { color: var(--kc-accent); content: counter(docs-step, decimal-leading-zero); font: 800 0.72rem var(--kc-font-mono); left: 1.15rem; position: absolute; top: 1.18rem; }
+  .kc-prose .note { background: var(--kc-accent-soft); border-left: 3px solid var(--kc-accent); color: var(--kc-muted); padding: 1rem 1.1rem; }
+
+  @media (max-width: 1180px) {
+    .kc-docs-shell { --kc-docs-tablet-columns: minmax(15rem, 18rem) minmax(0, 1fr); }
+  }
+
+  @media (max-width: 760px) {
+    .docs-navigation { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.35rem; }
+    .docs-navigation section { flex: 0 0 13rem; max-height: 12.5rem; overflow-y: auto; }
+    .docs-navigation section + section { margin-top: 0; }
+    .kc-prose .doc-grid { grid-template-columns: 1fr; }
+    .kc-prose .api-category-grid { grid-template-columns: 1fr; }
+  }
+</style>

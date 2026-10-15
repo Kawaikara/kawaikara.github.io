@@ -1,0 +1,117 @@
+---
+import { BlankLayout } from 'kawaichen';
+import KawaikaraHeader from '../components/KawaikaraHeader.astro';
+import LocaleHead from '../components/LocaleHead.astro';
+import LocaleRuntime from '../components/LocaleRuntime.astro';
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description: string;
+  titleKey: string;
+  descriptionKey: string;
+  canonicalPath?: string;
+}
+
+const { title, description, titleKey, descriptionKey, canonicalPath = Astro.url.pathname } = Astro.props;
+const canonical = new URL(canonicalPath, Astro.site);
+const socialImage = new URL('/og.png', Astro.site);
+---
+
+<BlankLayout {title} {description} class="kawaikara-site">
+  <Fragment slot="head">
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kawaikara" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="theme-color" content="#0a090f" />
+    <LocaleHead />
+  </Fragment>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+  <KawaikaraHeader />
+  <main><slot /></main>
+  <footer>
+    <span>Kawaikara</span>
+    <span data-i18n="common.footer.tagline">좋아하는 영상을 더 편안하게</span>
+    <a href="https://github.com/fabyday/kawaikara" target="_blank" rel="noreferrer">GitHub</a>
+  </footer>
+  <LocaleRuntime {titleKey} {descriptionKey} />
+  <script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealElements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+    if (reducedMotion) {
+      revealElements.forEach((element) => element.classList.add('is-visible'));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.16, rootMargin: '0px 0px -8%' },
+      );
+      revealElements.forEach((element) => observer.observe(element));
+
+      const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+      const parallaxElements = document.querySelectorAll<HTMLElement>('[data-parallax]');
+      let ticking = false;
+      const updateScrollEffects = () => {
+        const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = scrollRange > 0 ? window.scrollY / scrollRange : 0;
+        progress?.style.setProperty('transform', `scaleX(${ratio})`);
+        parallaxElements.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          const offset = Math.max(-1, Math.min(1, (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight));
+          element.style.setProperty('--parallax-y', `${offset * -24}px`);
+        });
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(updateScrollEffects);
+          ticking = true;
+        }
+      }, { passive: true });
+      updateScrollEffects();
+    }
+  </script>
+</BlankLayout>
+
+<style>
+  footer {
+    align-items: center;
+    border-top: 1px solid var(--kc-border);
+    color: var(--kc-muted);
+    display: flex;
+    font-size: 0.8rem;
+    gap: 1rem;
+    justify-content: space-between;
+    margin: 0 clamp(1.1rem, 4vw, 4rem);
+    min-height: 6rem;
+  }
+
+  footer span:first-child {
+    color: var(--kc-text);
+    font-weight: 800;
+  }
+
+  footer a {
+    color: var(--kc-muted);
+  }
+
+  @media (max-width: 600px) {
+    footer span:nth-child(2) {
+      display: none;
+    }
+  }
+</style>

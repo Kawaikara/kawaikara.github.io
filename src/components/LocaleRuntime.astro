@@ -1,0 +1,232 @@
+---
+interface Props {
+  titleKey?: string;
+  descriptionKey?: string;
+  documentationLocale?: 'ko' | 'ja';
+  documentationLocalePaths?: Partial<Record<'ko' | 'en' | 'ja', string>>;
+  documentationSection?: string;
+}
+
+const {
+  titleKey,
+  descriptionKey,
+  documentationLocale,
+  documentationLocalePaths = {},
+  documentationSection,
+} = Astro.props;
+---
+
+<div
+  hidden
+  data-locale-runtime
+  data-title-key={titleKey}
+  data-description-key={descriptionKey}
+  data-documentation-locale={documentationLocale}
+  data-documentation-locale-paths={JSON.stringify(documentationLocalePaths)}
+  data-documentation-section={documentationSection}
+></div>
+
+<script>
+  import { normalizeLocale, translate, type Locale } from '../i18n/messages';
+  import { translateApiCountSummary, translateDocumentationText } from '../i18n/documentation';
+
+  type LocaleRuntimeWindow = Window & { __kawaikaraLocaleRuntime?: boolean };
+  type ThemedSelectEvent = CustomEvent<{ value?: string }>;
+
+  const localeWindow = window as LocaleRuntimeWindow;
+  const generatedHeadingKeys = new Map([
+    ['Constructors', 'docs.api.constructors'],
+    ['Constructor', 'docs.api.constructor'],
+    ['Properties', 'docs.api.properties'],
+    ['Methods', 'docs.api.methods'],
+    ['Parameters', 'docs.api.parameters'],
+    ['Returns', 'docs.api.returns'],
+    ['Type Parameters', 'docs.api.typeParameters'],
+    ['Type declaration', 'docs.api.typeDeclaration'],
+    ['Categories', 'docs.api.categories'],
+    ['Using this reference', 'docs.api.usingReference'],
+    ['Classes', 'docs.api.classes'],
+    ['Interfaces', 'docs.api.interfaces'],
+    ['Functions', 'docs.api.functions'],
+    ['Type Aliases', 'docs.api.typeAliases'],
+    ['Enumerations', 'docs.api.enumerations'],
+    ['Variables', 'docs.api.variables'],
+    ['Modules', 'docs.api.modules'],
+    ['References', 'docs.api.references'],
+  ]);
+
+  function readSavedLocale(): Locale | undefined {
+    try {
+      return normalizeLocale(window.localStorage.getItem('kawaikara-locale'));
+    } catch {
+      return undefined;
+    }
+  }
+
+  function setSavedLocale(locale?: Locale): void {
+    try {
+      if (locale) window.localStorage.setItem('kawaikara-locale', locale);
+      else window.localStorage.removeItem('kawaikara-locale');
+    } catch {}
+  }
+
+  function readLocalePaths(config?: HTMLElement): Partial<Record<Locale, string>> {
+    try {
+      return JSON.parse(config?.dataset.documentationLocalePaths ?? '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  function applyLocale(): void {
+    const config = document.querySelector<HTMLElement>('[data-locale-runtime]');
+    if (!config) return;
+    const documentationLocale = normalizeLocale(config.dataset.documentationLocale);
+    const documentationLocalePaths = readLocalePaths(config);
+    const url = new URL(window.location.href);
+    const queryLocale = normalizeLocale(url.searchParams.get('lang'));
+    let savedLocale = readSavedLocale();
+
+    if (queryLocale) {
+      setSavedLocale(queryLocale);
+      savedLocale = queryLocale;
+    }
+    if (documentationLocale) {
+      setSavedLocale(documentationLocale);
+      savedLocale = documentationLocale;
+    }
+
+    const selectedLocale = queryLocale ?? savedLocale;
+    const requestedDocumentationLocale = selectedLocale
+      ?? normalizeLocale(document.documentElement.dataset.locale)
+      ?? 'ko';
+    const locale = documentationLocale ?? requestedDocumentationLocale;
+
+    if (!documentationLocale && documentationLocalePaths[requestedDocumentationLocale]) {
+      const translatedUrl = new URL(
+        documentationLocalePaths[requestedDocumentationLocale]!,
+        window.location.origin,
+      );
+      if (translatedUrl.pathname !== window.location.pathname) {
+        translatedUrl.hash = url.hash;
+        window.location.replace(translatedUrl.href);
+        return;
+      }
+    }
+
+    document.documentElement.lang = locale;
+    document.documentElement.dataset.locale = locale;
+
+    document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((element) => {
+      const key = element.dataset.i18n;
+      if (key) element.textContent = translate(locale, key);
+    });
+    document.querySelectorAll<HTMLElement>('[data-i18n-html]').forEach((element) => {
+      const key = element.dataset.i18nHtml;
+      if (key) element.innerHTML = translate(locale, key);
+    });
+    document.querySelectorAll<HTMLElement>('[data-i18n-aria]').forEach((element) => {
+      const key = element.dataset.i18nAria;
+      if (key) element.setAttribute('aria-label', translate(locale, key));
+    });
+    document.querySelectorAll<HTMLInputElement>('[data-i18n-placeholder]').forEach((element) => {
+      const key = element.dataset.i18nPlaceholder;
+      if (key) element.placeholder = translate(locale, key);
+    });
+    document.querySelectorAll<HTMLElement>('[data-doc-i18n]').forEach((element) => {
+      element.textContent = translateDocumentationText(locale, element.textContent ?? '');
+    });
+    document.querySelectorAll<HTMLElement>('[data-api-counts]').forEach((element) => {
+      element.textContent = translateApiCountSummary(locale, element.textContent ?? '');
+    });
+    document.querySelectorAll<HTMLElement>('.kc-prose p, .api-category-card span').forEach((element) => {
+      if (element.childElementCount === 0) {
+        element.textContent = translateDocumentationText(locale, element.textContent ?? '');
+      }
+    });
+    document
+      .querySelectorAll<HTMLElement>('.kc-prose h2, .kc-prose h3, .kc-prose h4, .kc-toc a')
+      .forEach((element) => {
+        const key = generatedHeadingKeys.get(element.textContent?.trim() ?? '');
+        if (key) element.textContent = translate(locale, key);
+      });
+    document.querySelectorAll<HTMLElement>('.type-reference-label').forEach((label) => {
+      const [, source] = (label.textContent ?? '').split(' · ', 2);
+      label.textContent = `${translate(locale, 'docs.api.type')}${source ? ` · ${source}` : ''}`;
+    });
+
+    const translationFallback = document.querySelector<HTMLElement>('[data-translation-fallback]');
+    if (translationFallback) {
+      const isMissingDesignTranslation = config.dataset.documentationSection === 'app-design'
+        && requestedDocumentationLocale !== 'en'
+        && !documentationLocale
+        && !documentationLocalePaths[requestedDocumentationLocale];
+      translationFallback.hidden = !isMissingDesignTranslation;
+      if (isMissingDesignTranslation) {
+        translationFallback.textContent = translate(locale, 'docs.locale.fallback');
+      }
+    }
+
+    const titleKey = config.dataset.titleKey;
+    const descriptionKey = config.dataset.descriptionKey;
+    if (titleKey) document.title = translate(locale, titleKey);
+    if (descriptionKey) {
+      document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute('content', translate(locale, descriptionKey));
+      document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.setAttribute('content', translate(locale, descriptionKey));
+    }
+    if (titleKey) {
+      document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute('content', translate(locale, titleKey));
+    }
+
+    document.querySelectorAll<HTMLElement>('[data-themed-select][data-select-name="locale"]').forEach((select) => {
+      select.dispatchEvent(new CustomEvent('themed-select:set', {
+        bubbles: true,
+        detail: { value: documentationLocale ?? queryLocale ?? savedLocale ?? 'auto' },
+      }));
+      if (select.dataset.localeBound === 'true') return;
+      select.dataset.localeBound = 'true';
+      select.addEventListener('themed-select:change', (event) => {
+        const nextValue = (event as ThemedSelectEvent).detail?.value;
+        const nextLocale = normalizeLocale(nextValue);
+        setSavedLocale(nextLocale);
+
+        if (nextLocale && documentationLocalePaths[nextLocale]) {
+          const destination = new URL(documentationLocalePaths[nextLocale]!, window.location.origin);
+          destination.hash = url.hash;
+          window.location.assign(destination.href);
+          return;
+        }
+        if (!nextLocale) {
+          const detectedLocale = (navigator.languages ?? [navigator.language])
+            .map((value) => normalizeLocale(value))
+            .find((value): value is Locale => Boolean(value));
+          if (detectedLocale && documentationLocalePaths[detectedLocale]) {
+            const destination = new URL(documentationLocalePaths[detectedLocale]!, window.location.origin);
+            destination.hash = url.hash;
+            window.location.assign(destination.href);
+            return;
+          }
+        }
+
+        const canonicalPath = documentationLocalePaths.en;
+        const destination = canonicalPath
+          ? new URL(canonicalPath, window.location.origin)
+          : new URL(url.href);
+        if (nextLocale) destination.searchParams.set('lang', nextLocale);
+        else destination.searchParams.delete('lang');
+        destination.hash = url.hash;
+        window.location.assign(destination.href);
+      });
+    });
+
+    document.querySelector<HTMLElement>('.kc-sidebar')?.setAttribute('aria-label', translate(locale, 'common.docs.navigation'));
+    document.querySelector<HTMLElement>('.kc-toc')?.setAttribute('aria-label', translate(locale, 'common.docs.toc'));
+    document.documentElement.dataset.localeReady = 'true';
+  }
+
+  if (!localeWindow.__kawaikaraLocaleRuntime) {
+    localeWindow.__kawaikaraLocaleRuntime = true;
+    document.addEventListener('astro:page-load', applyLocale);
+  }
+  applyLocale();
+</script>

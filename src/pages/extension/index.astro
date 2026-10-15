@@ -1,0 +1,106 @@
+---
+import { ExternalLink, Puzzle } from '@lucide/astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="Kawaikara WebExtension — 확장 설치"
+  description="Chrome과 Firefox에서 Kawaikara를 편리하게 사용할 수 있는 브라우저 확장입니다."
+  titleKey="meta.extension.title"
+  descriptionKey="meta.extension.description"
+  canonicalPath="/extension/"
+>
+  <section class="extension-page">
+    <div class="extension-heading" data-reveal>
+      <span class="eyebrow">Chrome · Firefox</span>
+      <h1>Kawaikara에<br /><em>유용한 확장</em></h1>
+      <p>현재 페이지나 선택한 링크를 Kawaikara로 전달할 수 있는 오픈소스 브라우저 확장입니다.</p>
+      <div class="extension-actions">
+        <a class="button button--primary" href="/docs/extension/"><Puzzle size={18} /> 확장 설치</a>
+        <a class="button button--secondary" href="https://github.com/Kawaikara/KawaikaraWebExtension" target="_blank" rel="noreferrer">
+          GitHub <ExternalLink size={16} />
+        </a>
+      </div>
+    </div>
+
+    <div class="extension-summary" data-reveal style="--reveal-delay: 100ms">
+      <article>
+        <span>01</span>
+        <h2>Kawaikara에서 열기</h2>
+        <p>현재 페이지 또는 선택한 링크를 데스크톱 앱으로 전달합니다.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h2>공유 링크 복사</h2>
+        <p>다른 사람이 Kawaikara로 열 수 있는 HTTPS 주소를 복사합니다.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h2>직접 설치</h2>
+        <p>Chrome과 Firefox 개발자 기능을 이용한 설치 방법을 문서에서 확인할 수 있습니다.</p>
+      </article>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .extension-page {
+    display: grid;
+    gap: clamp(3rem, 8vw, 8rem);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
+    min-height: calc(100vh - 4.5rem);
+    padding: clamp(5rem, 10vw, 9rem) clamp(1.1rem, 7vw, 8rem);
+  }
+
+  .extension-heading { align-self: center; max-width: 50rem; }
+
+  h1 {
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    letter-spacing: -0.075em;
+    line-height: 0.95;
+    margin: 1.5rem 0 2rem;
+  }
+
+  h1 em { color: var(--kc-violet); font-style: normal; }
+
+  .extension-heading > p,
+  .extension-summary p {
+    color: var(--kc-muted);
+    line-height: 1.7;
+  }
+
+  .extension-heading > p { font-size: 1.1rem; max-width: 38rem; }
+
+  .extension-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .extension-summary {
+    align-self: center;
+    border: 1px solid var(--kc-border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+  .extension-summary article {
+    background: var(--kc-surface-raised);
+    padding: 1.7rem;
+  }
+
+  .extension-summary article + article { border-top: 1px solid var(--kc-border); }
+  .extension-summary span { color: var(--kc-accent); font-family: var(--kc-font-mono); font-size: 0.7rem; }
+  .extension-summary h2 { font-size: 1.2rem; margin: 0.65rem 0; }
+  .extension-summary p { font-size: 0.92rem; margin: 0; }
+
+  @media (max-width: 820px) {
+    .extension-page { grid-template-columns: 1fr; min-height: auto; }
+  }
+
+  @media (max-width: 520px) {
+    .extension-page { padding-top: 4rem; }
+    h1 { font-size: clamp(3rem, 15vw, 5rem); }
+  }
+</style>

@@ -1,0 +1,349 @@
+{
+  "default": "staging/3.0.0",
+  "versions": [
+    {
+      "channel": "stable",
+      "id": "stable/2.3.1",
+      "navigation": {
+        "app-design": [
+          {
+            "title": "Overview",
+            "items": [
+              {
+                "href": "/docs/stable/2.3.1/app/",
+                "title": "Overview"
+              }
+            ]
+          },
+          {
+            "title": "General",
+            "items": [
+              {
+                "href": "/docs/stable/2.3.1/app/ActionMapRules/",
+                "title": "ActionChainMap Rules"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/CustomCalls/",
+                "title": "Custom Calls"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/FAQ_JP/",
+                "title": "FAQ(よくある質問)"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/FAQ_KR/",
+                "title": "자주 묻는 질문"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/FAQ/",
+                "title": "FAQ (Frequently Asked Questions)"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/ISSUE/",
+                "title": "Known Issue: Google V8 JavaScript Engine on macOS 15 Sequoia"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/KawaiProtocol/",
+                "title": "Kawai Protocol"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/newbuild/",
+                "title": "newbuild"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/Plugins/",
+                "title": "Plugin"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/Versioning/",
+                "title": "Versioning"
+              },
+              {
+                "href": "/docs/stable/2.3.1/app/viewmode/",
+                "title": "View mode"
+              }
+            ]
+          }
+        ],
+        "app-api": [
+          {
+            "title": "Source API",
+            "items": [
+              {
+                "href": "/api/stable/2.3.1/app/",
+                "title": "Overview"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/component/",
+                "title": "component"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/data/",
+                "title": "data"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/definitions/",
+                "title": "definitions"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/electron/",
+                "title": "electron"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/logging/",
+                "title": "logging"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/logics/",
+                "title": "logics"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/manager/",
+                "title": "manager"
+              },
+              {
+                "href": "/api/stable/2.3.1/app/categories/plugins/",
+                "title": "plugins"
+              }
+            ]
+          }
+        ]
+      },
+      "sections": {
+        "app-api": 299,
+        "app-design": 13,
+        "builtin-sites": 0,
+        "site-api": 0
+      },
+      "siteApiVersion": null,
+      "sourceRef": "v2.3.1",
+      "version": "2.3.1"
+    },
+    {
+      "channel": "staging",
+      "id": "staging/3.0.0",
+      "navigation": {
+        "app-design": [
+          {
+            "title": "Overview",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/",
+                "title": "Overview"
+              }
+            ]
+          },
+          {
+            "title": "Architecture",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/Architecture/Overview/",
+                "title": "Architecture Overview"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Architecture/Logging/",
+                "title": "Logging and Diagnostics"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Architecture/Runtime/",
+                "title": "Runtime and Lifecycle"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Architecture/Security/",
+                "title": "Security Boundaries"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Architecture/Bundle/",
+                "title": "Bundle, Provider, and Plugin"
+              }
+            ]
+          },
+          {
+            "title": "Documentation",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/Documentation/ExportAndLocalization/",
+                "title": "Documentation Snapshot and Localization"
+              }
+            ]
+          },
+          {
+            "title": "General",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/BranchesAndChannels/",
+                "title": "Branches and Release Channels"
+              }
+            ]
+          },
+          {
+            "title": "Features",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/Features/BuiltInSites/",
+                "title": "Built-in Integrations"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Features/OverlayAndPreferences/",
+                "title": "Overlay and Preferences"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Features/PictureInPicture/",
+                "title": "Unified Picture in Picture"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Features/VideoAndDownloads/",
+                "title": "Video View and External Downloader"
+              }
+            ]
+          },
+          {
+            "title": "Plugins",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/Plugins/Overview/",
+                "title": "Bundle System Overview"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Plugins/Provider/",
+                "title": "Provider Development Guide"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Plugins/Development/",
+                "title": "Bundle Development Host"
+              },
+              {
+                "href": "/docs/staging/3.0.0/app/Plugins/Packaging/",
+                "title": "Bundle Packaging and Distribution"
+              }
+            ]
+          },
+          {
+            "title": "build",
+            "items": [
+              {
+                "href": "/docs/staging/3.0.0/app/build/BuildAndRelease/",
+                "title": "Build and Release Guide"
+              }
+            ]
+          }
+        ],
+        "app-api": [
+          {
+            "title": "Source API",
+            "items": [
+              {
+                "href": "/api/staging/3.0.0/app/",
+                "title": "Overview"
+              },
+              {
+                "href": "/api/staging/3.0.0/app/categories/main/",
+                "title": "Main"
+              },
+              {
+                "href": "/api/staging/3.0.0/app/categories/common/",
+                "title": "Common"
+              },
+              {
+                "href": "/api/staging/3.0.0/app/categories/renderer/",
+                "title": "Renderer"
+              },
+              {
+                "href": "/api/staging/3.0.0/app/categories/preload/",
+                "title": "Preload"
+              },
+              {
+                "href": "/api/staging/3.0.0/app/categories/development/",
+                "title": "Development"
+              },
+              {
+                "href": "/api/staging/3.0.0/app/categories/debug/",
+                "title": "Debug"
+              }
+            ]
+          }
+        ],
+        "builtin-sites": [
+          {
+            "title": "Built-in Sites",
+            "items": [
+              {
+                "href": "/api/staging/3.0.0/builtin-sites/",
+                "title": "Overview"
+              },
+              {
+                "href": "/api/staging/3.0.0/builtin-sites/categories/providers/",
+                "title": "Providers"
+              },
+              {
+                "href": "/api/staging/3.0.0/builtin-sites/categories/injection/",
+                "title": "Injection"
+              },
+              {
+                "href": "/api/staging/3.0.0/builtin-sites/categories/bundle-core/",
+                "title": "Bundle Core"
+              }
+            ]
+          }
+        ],
+        "site-api": [
+          {
+            "title": "Site API",
+            "items": [
+              {
+                "href": "/api/staging/3.0.0/site-api/",
+                "title": "Overview"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/classes/",
+                "title": "Classes"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/interfaces/",
+                "title": "Interfaces"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/functions/",
+                "title": "Functions"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/type-aliases/",
+                "title": "Type Aliases"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/variables/",
+                "title": "Variables"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/modules/",
+                "title": "Modules"
+              },
+              {
+                "href": "/api/staging/3.0.0/site-api/categories/references/",
+                "title": "References"
+              }
+            ]
+          }
+        ]
+      },
+      "sections": {
+        "app-api": 646,
+        "app-design": 22,
+        "builtin-sites": 144,
+        "site-api": 129
+      },
+      "bundles": [
+        {
+          "builtin": true,
+          "id": "kawaikara.builtin-sites",
+          "version": "1.0.0"
+        }
+      ],
+      "siteApiVersion": "1.0.0",
+      "sourceCommit": "08438577c78669aaff7aa0382add023bc1a47971",
+      "sourceDirty": true,
+      "sourceRef": "working-tree",
+      "version": "3.0.0"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import DocsPageLayout from '../../../../../layouts/DocsPageLayout.astro';
+import {
+  getDocumentationVersion,
+  type DocumentationSection,
+  type DocumentationVersion,
+} from '../../../../../data/documentation';
+
+interface Props {
+  entry: CollectionEntry<'reference'>;
+  documentationSection: DocumentationSection;
+  documentationVersion: DocumentationVersion;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    'reference',
+    ({ data }) => data.section === 'app-api'
+      || data.section === 'builtin-sites'
+      || data.section === 'site-api',
+  );
+
+  return entries.flatMap((entry) => {
+    const [channel, version, section, ...pathParts] = entry.id.split('/');
+    const documentationVersion = getDocumentationVersion(channel, version);
+    if (!documentationVersion) return [];
+    if (pathParts.at(-1) === 'README') pathParts.pop();
+    const documentationSection = section as DocumentationSection;
+    if (documentationSection === 'app-api' && ['src', 'typescript_src'].includes(pathParts[0])) {
+      pathParts.shift();
+    }
+    if (documentationSection === 'builtin-sites'
+      && pathParts.slice(0, 3).join('/') === 'packages/builtin-sites/src') {
+      pathParts.splice(0, 3);
+    }
+
+    return [{
+      params: {
+        channel,
+        kind: documentationSection === 'site-api'
+          ? 'site-api'
+          : documentationSection === 'builtin-sites'
+            ? 'builtin-sites'
+            : 'app',
+        slug: pathParts.length ? pathParts.join('/') : undefined,
+        version,
+      },
+      props: { documentationSection, documentationVersion, entry },
+    }];
+  });
+}
+
+const { entry, documentationSection, documentationVersion } = Astro.props as Props;
+const { Content, headings } = await render(entry);
+const apiName = documentationSection === 'site-api'
+  ? 'Site API'
+  : documentationSection === 'builtin-sites'
+    ? 'Built-in Sites'
+    : 'Source API';
+const pageTitle = entry.data.title === apiName
+  ? `${apiName} ${documentationVersion.version} · Kawaikara`
+  : `${entry.data.title} · ${apiName} ${documentationVersion.version}`;
+---
+
+<DocsPageLayout
+  title={pageTitle}
+  description={entry.data.description ?? `Kawaikara ${documentationVersion.version} ${apiName} reference`}
+  {documentationVersion}
+  {documentationSection}
+  {headings}
+  referenceCategory={entry.data.category}
+  referenceDescription={entry.data.description}
+  referenceKind={entry.data.symbolKind}
+  referencePath={entry.data.displayPath}
+  referenceTitle={entry.data.title}
+>
+  <Content />
+</DocsPageLayout>

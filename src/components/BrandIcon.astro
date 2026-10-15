@@ -1,0 +1,22 @@
+---
+interface Props {
+  icon: {
+    path: string;
+    title: string;
+  };
+  size?: number;
+}
+
+const { icon, size = 18 } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  fill="currentColor"
+  height={size}
+  role="img"
+  viewBox="0 0 24 24"
+  width={size}
+>
+  <path d={icon.path} />
+</svg>

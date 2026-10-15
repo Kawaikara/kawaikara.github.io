@@ -1,0 +1,19 @@
+---
+import { ThemedSelect } from 'kawaichen';
+
+const options = [
+  { value: 'auto', label: '자동 (기기 언어)', i18nKey: 'common.locale.auto' },
+  { value: 'ko', label: '한국어', i18nKey: 'common.locale.ko' },
+  { value: 'en', label: 'English', i18nKey: 'common.locale.en' },
+  { value: 'ja', label: '日本語', i18nKey: 'common.locale.ja' },
+];
+---
+
+<ThemedSelect
+  id="locale-selector"
+  name="locale"
+  ariaLabel="언어 선택"
+  ariaLabelKey="common.locale.label"
+  selectedValue="auto"
+  {options}
+/>

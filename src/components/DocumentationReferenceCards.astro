@@ -1,0 +1,47 @@
+---
+import {
+  defaultDocumentationVersion,
+  getReferenceRoot,
+  hasSection,
+} from '../data/documentation';
+
+const version = defaultDocumentationVersion;
+const cards = version ? [
+  {
+    description: `Kawaikara ${version.version}의 구조와 런타임 설계`,
+    descriptionKey: 'docs.home.reference.design.description',
+    href: hasSection(version, 'app-design') ? getReferenceRoot(version, 'app-design') : undefined,
+    title: 'APP 설계 문서',
+    titleKey: 'docs.home.reference.design.title',
+  },
+  {
+    description: '앱 내부 모듈, 클래스, 인터페이스, 함수 및 타입 레퍼런스',
+    descriptionKey: 'docs.home.reference.source.description',
+    href: hasSection(version, 'app-api') ? getReferenceRoot(version, 'app-api') : undefined,
+    title: 'Source API',
+    titleKey: 'docs.home.reference.source.title',
+  },
+  {
+    description: '함께 배포되는 Site Provider, 주입 코드와 번들 진입점',
+    descriptionKey: 'docs.home.reference.builtin.description',
+    href: hasSection(version, 'builtin-sites') ? getReferenceRoot(version, 'builtin-sites') : undefined,
+    title: 'Built-in Sites',
+    titleKey: 'docs.home.reference.builtin.title',
+  },
+  {
+    description: version.siteApiVersion
+      ? `Provider·Plugin 개발용 Site API v${version.siteApiVersion}`
+      : '이 앱 버전에는 별도 Site API가 없습니다.',
+    descriptionKey: 'docs.home.reference.site.description',
+    href: hasSection(version, 'site-api') ? getReferenceRoot(version, 'site-api') : undefined,
+    title: 'Site API',
+    titleKey: 'docs.home.reference.site.title',
+  },
+] : [];
+---
+
+<div class="doc-grid">
+  {cards.map((card) => card.href
+    ? <a class="doc-card" href={card.href}><strong data-i18n={card.titleKey}>{card.title}</strong><span data-i18n={card.descriptionKey}>{card.description}</span></a>
+    : <div class="doc-card doc-card--disabled"><strong data-i18n={card.titleKey}>{card.title}</strong><span data-i18n={card.descriptionKey}>{card.description}</span></div>)}
+</div>

@@ -1,0 +1,45 @@
+---
+interface Props {
+  size?: 'small' | 'large';
+}
+
+const { size = 'small' } = Astro.props;
+---
+
+<span class:list={['brand-mark', `brand-mark--${size}`]} aria-hidden="true">
+  <img src="/kawaikara-icon.png" alt="" width={size === 'large' ? 96 : 32} height={size === 'large' ? 96 : 32} />
+</span>
+
+<style>
+  .brand-mark {
+    align-items: center;
+    background: var(--kc-surface-raised);
+    border: 1px solid var(--kc-border);
+    display: inline-flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .brand-mark--small {
+    border-radius: 0.6rem;
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+
+  .brand-mark--large {
+    border-radius: 1.5rem;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 34%);
+    height: 7rem;
+    transform: rotate(-2deg);
+    width: 7rem;
+  }
+
+  img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+</style>
+

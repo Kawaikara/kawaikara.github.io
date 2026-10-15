@@ -1,0 +1,81 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import DocsPageLayout from '../../../../../layouts/DocsPageLayout.astro';
+import { getDocumentationVersion, type DocumentationVersion } from '../../../../../data/documentation';
+
+interface Props {
+  entry: CollectionEntry<'reference'>;
+  documentationLocale?: 'ko' | 'ja';
+  documentationLocalePaths: Partial<Record<'ko' | 'en' | 'ja', string>>;
+  documentationVersion: DocumentationVersion;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('reference', ({ data }) => data.section === 'app-design');
+  const routes = entries.flatMap((entry) => {
+    const [channel, version, , ...pathParts] = entry.id.split('/');
+    const documentationVersion = getDocumentationVersion(channel, version);
+    if (!documentationVersion) return [];
+    if (pathParts.at(-1) === 'README') pathParts.pop();
+
+    const publicPathParts = pathParts.map((segment) => segment.replace(/^\d+[._-]/, ''));
+    const localized = publicPathParts[0] === 'i18n' && ['ko', 'ja'].includes(publicPathParts[1]);
+    const documentationLocale = localized ? publicPathParts[1] as 'ko' | 'ja' : undefined;
+    const translationParts = localized ? publicPathParts.slice(2) : publicPathParts;
+    const translationKey = translationParts.join('/') || '__index__';
+    const href = `/docs/${channel}/${version}/app/${publicPathParts.length ? `${publicPathParts.join('/')}/` : ''}`;
+
+    return [{
+      channel,
+      documentationLocale,
+      documentationVersion,
+      entry,
+      href,
+      params: { channel, version, slug: publicPathParts.length ? publicPathParts.join('/') : undefined },
+      translationKey: `${channel}/${version}/${translationKey}`,
+    }];
+  });
+
+  const localePaths = new Map<string, Partial<Record<'ko' | 'en' | 'ja', string>>>();
+  for (const route of routes) {
+    const paths = localePaths.get(route.translationKey) ?? {};
+    paths[route.documentationLocale ?? 'en'] = route.href;
+    localePaths.set(route.translationKey, paths);
+  }
+
+  return routes.map((route) => ({
+    params: route.params,
+    props: {
+      documentationLocale: route.documentationLocale,
+      documentationLocalePaths: localePaths.get(route.translationKey) ?? {},
+      documentationVersion: route.documentationVersion,
+      entry: route.entry,
+    },
+  }));
+}
+
+const {
+  entry,
+  documentationLocale,
+  documentationLocalePaths,
+  documentationVersion,
+} = Astro.props as Props;
+const { Content, headings } = await render(entry);
+---
+
+  <DocsPageLayout
+  title={`${entry.data.title} · Kawaikara ${documentationVersion.version} Docs`}
+  description={entry.data.description ?? `Kawaikara ${documentationVersion.version} 설계 문서`}
+  {documentationVersion}
+  documentationSection="app-design"
+  {headings}
+  referenceCategory={entry.data.category}
+  referenceDescription={entry.data.description}
+  referenceKind={entry.data.symbolKind}
+  referencePath={entry.data.displayPath}
+  referenceTitle={entry.data.title}
+  {documentationLocale}
+  {documentationLocalePaths}
+>
+  <Content />
+</DocsPageLayout>

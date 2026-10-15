@@ -1,0 +1,32 @@
+---
+layout: ../../../layouts/DocsPageLayout.astro
+title: Kawaikara 설치 · Kawaikara Docs
+description: Kawaikara 데스크톱 앱 설치 및 첫 실행 안내입니다.
+titleKey: meta.docs.install.title
+descriptionKey: meta.docs.install.description
+---
+
+import I18n from '../../../components/I18n.astro';
+
+# <I18n keyName="docs.install.title">Kawaikara 설치</I18n>
+
+<p className="doc-lead"><I18n keyName="docs.install.lead">Kawaikara는 Windows와 macOS에서 스트리밍 서비스를 주소창과 탭 없이 집중해서 볼 수 있게 만든 데스크톱 뷰어입니다.</I18n></p>
+
+## <I18n keyName="docs.install.steps.title">설치 순서</I18n>
+
+<ol className="steps">
+  <li><I18n keyName="docs.install.step1" html><a href="https://github.com/fabyday/kawaikara/releases/latest" target="_blank" rel="noreferrer">GitHub Releases</a>에서 운영체제에 맞는 최신 파일을 받습니다.</I18n></li>
+  <li><I18n keyName="docs.install.step2" html>다운로드한 설치 파일을 열고 안내에 따라 설치합니다. macOS에서 처음 실행이 차단되면 시스템 설정의 개인정보 보호 및 보안에서 실행을 허용합니다.</I18n></li>
+  <li><I18n keyName="docs.install.step3" html>Kawaikara를 한 번 실행합니다. 이 과정에서 브라우저가 사용하는 <code>kawaikara://</code> 연결 방식이 운영체제에 등록됩니다.</I18n></li>
+  <li><I18n keyName="docs.install.step4" html>메뉴에서 원하는 서비스를 선택하거나 WebExtension의 <strong>Kawaikara에서 열기</strong>를 사용합니다.</I18n></li>
+</ol>
+
+## <I18n keyName="docs.install.basic.title">기본 사용</I18n>
+
+<p><I18n keyName="docs.install.basic.description" html><kbd>Tab</kbd>을 누르면 사이트 메뉴가 열립니다. YouTube, CHZZK, Netflix, Twitch, Disney+, Laftel, TVING과 다양한 영상·음악 서비스를 선택할 수 있습니다.</I18n></p>
+
+## <I18n keyName="docs.install.trouble.title">외부 링크가 열리지 않을 때</I18n>
+
+- <I18n keyName="docs.install.trouble1">Kawaikara 최신 버전이 설치되어 있고 한 번 이상 실행되었는지 확인합니다.</I18n>
+- <I18n keyName="docs.install.trouble2">브라우저의 외부 애플리케이션 실행 확인 창에서 Kawaikara 열기를 허용합니다.</I18n>
+- <I18n keyName="docs.install.trouble3">지원 사이트의 HTTPS 링크인지 확인합니다.</I18n>

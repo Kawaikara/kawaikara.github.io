@@ -1,0 +1,426 @@
+---
+title: "Main"
+channel: "staging"
+appVersion: "3.0.0"
+siteApiVersion: "1.0.0"
+category: "Source API · categories"
+description: "Modules and symbols in the Main area of Source API. Open an item to inspect its declaration path, contract, properties, and signatures."
+displayPath: "categories/main"
+section: "app-api"
+sourceRef: "working-tree"
+sourcePath: "categories/main.md"
+symbolKind: "Reference"
+---
+## Classes
+
+- [ApplicationDataManager](/api/staging/3.0.0/app/Main/Manager/ApplicationDataManager/classes/ApplicationDataManager/) — Coordinates application data behavior.
+- [ApplicationLifecycleManager](/api/staging/3.0.0/app/Main/Manager/ApplicationLifecycleManager/classes/ApplicationLifecycleManager/) — Owns Electron process events and requests that can arrive before ready.
+- [BundleDevelopmentManager](/api/staging/3.0.0/app/Main/Manager/BundleDevelopmentManager/classes/BundleDevelopmentManager/) — Coordinates bundle development behavior.
+- [BundleManager](/api/staging/3.0.0/app/Main/Manager/BundleManager/classes/BundleManager/) — Coordinates bundle behavior.
+- [DeveloperLinkManager](/api/staging/3.0.0/app/Main/Manager/DeveloperLinkManager/classes/DeveloperLinkManager/) — Opens the fixed project links and resolves the developer channel live state.
+- [DiscordPresenceManager](/api/staging/3.0.0/app/Main/Manager/DiscordPresenceManager/classes/DiscordPresenceManager/) — Publishes Kawaikara's current viewing state through Discord Rich Presence.
+- [DisposableStore](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/classes/DisposableStore/) — Represents the disposable store.
+- [ExternalBrowserManager](/api/staging/3.0.0/app/Main/Manager/ExternalBrowserManager/classes/ExternalBrowserManager/) — Coordinates external browser behavior.
+- [ExternalDownloaderManager](/api/staging/3.0.0/app/Main/Manager/ExternalDownloaderManager/classes/ExternalDownloaderManager/) — Coordinates external downloader behavior.
+- [IpcManager](/api/staging/3.0.0/app/Main/Manager/IPCManager/classes/IpcManager/) — Coordinates IPC behavior.
+- [LoggingManager](/api/staging/3.0.0/app/Main/Manager/LoggingManager/classes/LoggingManager/) — Coordinates logging behavior.
+- [ManagerContainer](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/classes/ManagerContainer/) — Application-scoped manager composition container.
+- [PluginHost](/api/staging/3.0.0/app/Main/Plugin/PluginHost/classes/PluginHost/) — Represents the plugin host.
+- [PreferenceManager](/api/staging/3.0.0/app/Main/Manager/PreferenceManager/classes/PreferenceManager/) — Coordinates preference behavior.
+- [ShortcutManager](/api/staging/3.0.0/app/Main/Manager/ShortcutManager/classes/ShortcutManager/) — Coordinates shortcut behavior.
+- [SiteManager](/api/staging/3.0.0/app/Main/Manager/SiteManager/classes/SiteManager/) — Coordinates site behavior.
+- [UnifiedPictureInPictureManager](/api/staging/3.0.0/app/Main/Manager/UnifiedPictureInPictureManager/classes/UnifiedPictureInPictureManager/) — Coordinates unified picture in picture behavior.
+- [UpdateManager](/api/staging/3.0.0/app/Main/Manager/UpdateManager/classes/UpdateManager/) — Coordinates update behavior.
+- [VideoLibraryManager](/api/staging/3.0.0/app/Main/Manager/VideoLibraryManager/classes/VideoLibraryManager/) — Coordinates video library behavior.
+- [WindowManager](/api/staging/3.0.0/app/Main/Manager/WindowManager/classes/WindowManager/) — Coordinates window behavior.
+
+## Interfaces
+
+- [ActiveExternalLogin](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/interfaces/ActiveExternalLogin/) — Describes the active external login contract.
+- [ApplicationManagerOptions](/api/staging/3.0.0/app/Main/DependencyInjection/ApplicationManagers/interfaces/ApplicationManagerOptions/) — Describes the application manager options contract.
+- [ApplicationUpdateSignal](/api/staging/3.0.0/app/Main/Functional/ApplicationUpdates/interfaces/ApplicationUpdateSignal/) — Describes the application update signal contract.
+- [AppMessages](/api/staging/3.0.0/app/Main/Functional/RendererMessages/interfaces/AppMessages/) — Describes the app messages contract.
+- [BrowserDataTarget](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/interfaces/BrowserDataTarget/) — Describes the browser data target contract.
+- [BundleBrowserProfileContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/BundleBrowserProfileContribution/) — A persistent browser profile contributed by one Bundle.
+- [BundleDefinition](/api/staging/3.0.0/app/Main/Plugin/PluginHost/InternalDeclarations/interfaces/BundleDefinition/) — The only installable extension unit. A Bundle must contain one or more Providers. Bundle-level Plugins may be global or filtered with providerIds.
+- [BundleLocaleContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/BundleLocaleContribution/) — Describes the bundle locale contribution contract.
+- [BundleManifest](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/BundleManifest/) — Filesystem metadata stored at the root of an installable Bundle.
+- [BundleUpdateContext](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/BundleUpdateContext/) — Values provided to a trusted Bundle update resolver when Update is clicked.
+- [CachedDeveloperYouTubeStatus](/api/staging/3.0.0/app/Main/Functional/DeveloperLinks/interfaces/CachedDeveloperYouTubeStatus/) — Describes the cached developer you tube status contract.
+- [DevelopmentProjectRuntime](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/interfaces/DevelopmentProjectRuntime/) — Describes the development project runtime contract.
+- [Disposable](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/Disposable/) — Describes the disposable contract.
+- [EnterUnifiedPictureInPictureOptions](/api/staging/3.0.0/app/Main/Inject/UnifiedPictureInPicturePage/InternalDeclarations/interfaces/EnterUnifiedPictureInPictureOptions/) — Describes the enter unified picture in picture options contract.
+- [ExternalDownloaderReleaseArtifact](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/interfaces/ExternalDownloaderReleaseArtifact/) — Describes the external downloader release artifact contract.
+- [ExternalDownloaderReleaseManifest](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/interfaces/ExternalDownloaderReleaseManifest/) — Describes the external downloader release manifest contract.
+- [ExternalLoginOptions](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/ExternalLoginOptions/) — Describes the external login options contract.
+- [ExternalLoginViewData](/api/staging/3.0.0/app/Main/Functional/Locale/interfaces/ExternalLoginViewData/) — Describes the external login view data contract.
+- [ExternalOpenRequest](/api/staging/3.0.0/app/Main/Functional/ExternalOpen/interfaces/ExternalOpenRequest/) — Describes the external open request contract.
+- [InitializedApplication](/api/staging/3.0.0/app/Main/Functional/ApplicationInitialization/interfaces/InitializedApplication/) — Describes the initialized application contract.
+- [InspectedBundle](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/interfaces/InspectedBundle/) — Describes the inspected bundle contract.
+- [InspectedPlugin](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/interfaces/InspectedPlugin/) — Describes the inspected plugin contract.
+- [InspectedProvider](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/interfaces/InspectedProvider/) — Describes the inspected provider contract.
+- [InstalledExternalDownloaderApp](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/interfaces/InstalledExternalDownloaderApp/) — Describes the installed external downloader app contract.
+- [InternalVideoPictureInPictureState](/api/staging/3.0.0/app/Main/Functional/WindowRuntime/interfaces/InternalVideoPictureInPictureState/) — Describes the internal video picture in picture state contract.
+- [ManagerResolver](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/interfaces/ManagerResolver/) — Describes the manager resolver contract.
+- [ManagerToken\](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/interfaces/ManagerToken/) — Describes the manager token contract.
+- [PagePictureInPicturePolicyInjectionOptions](/api/staging/3.0.0/app/Main/Inject/PagePictureInPicturePolicy/interfaces/PagePictureInPicturePolicyInjectionOptions/) — Describes the page picture in picture policy injection options contract.
+- [PagePictureInPicturePolicyOptions](/api/staging/3.0.0/app/Main/Functional/PagePictureInPicturePolicy/InternalDeclarations/interfaces/PagePictureInPicturePolicyOptions/) — Describes the page picture in picture policy options contract.
+- [PageVideoCandidate](/api/staging/3.0.0/app/Main/Inject/PictureInPictureVideo/interfaces/PageVideoCandidate/) — Describes the page video candidate contract.
+- [ParsedVideoCandidate](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/interfaces/ParsedVideoCandidate/) — Describes the parsed video candidate contract.
+- [PictureInPictureVideoCandidate](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/interfaces/PictureInPictureVideoCandidate/) — Describes the picture in picture video candidate contract.
+- [PluginContext](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/PluginContext/) — Describes the plugin context contract.
+- [PluginDefinition](/api/staging/3.0.0/app/Main/Manager/SiteManager/InternalDeclarations/interfaces/PluginDefinition/) — Describes the plugin definition contract.
+- [PluginManifest](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/PluginManifest/) — Filesystem metadata owned by one Plugin directory.
+- [PluginMetadata](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/PluginMetadata/) — Describes the plugin metadata contract.
+- [PluginViewPanelContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/PluginViewPanelContribution/) — Describes the plugin view panel contribution contract.
+- [PreInitializedApplication](/api/staging/3.0.0/app/Main/Functional/ApplicationPreInitialization/interfaces/PreInitializedApplication/) — Describes the pre initialized application contract.
+- [ProviderDefinition](/api/staging/3.0.0/app/Main/Manager/SiteManager/InternalDeclarations/interfaces/ProviderDefinition/) — One Provider directory and the code loaded from its manifest entry.
+- [ProviderManifest](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/ProviderManifest/) — Filesystem metadata owned by one Provider directory.
+- [ProviderManifestPictureInPictureContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/ProviderManifestPictureInPictureContribution/) — Manifest-owned PiP switch. Site-specific behavior belongs in @provider().
+- [ProviderMetadata](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/ProviderMetadata/) — Describes the provider metadata contract.
+- [ProviderSettingsContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/ProviderSettingsContribution/) — Describes the provider settings contribution contract.
+- [RegisteredBundle](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/interfaces/RegisteredBundle/) — Describes the registered bundle contract.
+- [RegisteredProvider](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/interfaces/RegisteredProvider/) — Describes the registered provider contract.
+- [RegisteredRuntimePlugin](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/interfaces/RegisteredRuntimePlugin/) — Describes the registered runtime plugin contract.
+- [RendererMessages](/api/staging/3.0.0/app/Main/Functional/RendererMessages/interfaces/RendererMessages/) — Describes the renderer messages contract.
+- [ResolvedSiteAddress](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/interfaces/ResolvedSiteAddress/) — Describes the resolved site address contract.
+- [ShortcutBinding](/api/staging/3.0.0/app/Main/Functional/Shortcut/interfaces/ShortcutBinding/) — Describes the shortcut binding contract.
+- [ShortFormVideoContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/ShortFormVideoContribution/) — Standard short-form capabilities understood by Kawaikara. Providers expose these once and the app supplies local/PiP shortcuts and preference storage.
+- [ShortFormVideoPublisher](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/ShortFormVideoPublisher/) — Describes the short form video publisher contract.
+- [SingletonRegistration\](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/InternalDeclarations/interfaces/SingletonRegistration/) — Describes the singleton registration contract.
+- [SiteActions](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteActions/) — Describes the site actions contract.
+- [SiteActionShortcutContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteActionShortcutContribution/) — Describes the site action shortcut contribution contract.
+- [SiteAddressContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteAddressContribution/) — Describes the site address contribution contract.
+- [SiteBrowser](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteBrowser/) — Describes the site browser contract.
+- [SiteBrowserIdentityOptions](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteBrowserIdentityOptions/) — Describes the site browser identity options contract.
+- [SiteContext](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteContext/) — Describes the site context contract.
+- [SiteCookieClearOptions](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteCookieClearOptions/) — Describes the site cookie clear options contract.
+- [SiteCookieMetadata](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteCookieMetadata/) — Describes the site cookie metadata contract.
+- [SiteCookieQuery](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteCookieQuery/) — Describes the site cookie query contract.
+- [SiteCookieStore](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteCookieStore/) — Describes the site cookie store contract.
+- [SiteExternalBrowser](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteExternalBrowser/) — Describes the site external browser contract.
+- [SiteIsolationContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteIsolationContribution/) — Describes the site isolation contribution contract.
+- [SiteLocaleContext](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteLocaleContext/) — Describes the site locale context contract.
+- [SiteLocaleContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteLocaleContribution/) — Describes the site locale contribution contract.
+- [SiteLogger](/api/staging/3.0.0/app/Main/Functional/SitePagePipeline/InternalDeclarations/interfaces/SiteLogger/) — Describes the site logger contract.
+- [SiteMenuContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteMenuContribution/) — Describes the site menu contribution contract.
+- [SitePageInjection](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SitePageInjection/) — Describes the site page injection contract.
+- [SitePagePipeline](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SitePagePipeline/) — Application-owned page pipeline. It centralizes document lifecycle retries, frame traversal, failure isolation, diagnostics, and teardown for Providers.
+- [SitePictureInPictureContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SitePictureInPictureContribution/) — Describes the site picture in picture contribution contract.
+- [SiteRequestDetails](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteRequestDetails/) — Describes the site request details contract.
+- [SiteRequestRedirect](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteRequestRedirect/) — Describes the site request redirect contract.
+- [SiteRuntimeProfile](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/interfaces/SiteRuntimeProfile/) — Describes the site runtime profile contract.
+- [SiteShortcutContribution](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/interfaces/SiteShortcutContribution/) — Describes the site shortcut contribution contract.
+- [SiteViewer](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/interfaces/SiteViewer/) — Describes the site viewer contract.
+- [StandardVideoLocation](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/interfaces/StandardVideoLocation/) — Describes the standard video location contract.
+- [StoredDevelopmentProject](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/interfaces/StoredDevelopmentProject/) — Describes the stored development project contract.
+- [StoredVideoLibraryState](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/interfaces/StoredVideoLibraryState/) — Describes the stored video library state contract.
+- [UnifiedPictureInPictureState](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/interfaces/UnifiedPictureInPictureState/) — Describes the unified picture in picture state contract.
+- [VideoBrowserMessages](/api/staging/3.0.0/app/Main/Functional/RendererMessages/interfaces/VideoBrowserMessages/) — Describes the video browser messages contract.
+- [VideoLibraryMessages](/api/staging/3.0.0/app/Main/Functional/RendererMessages/interfaces/VideoLibraryMessages/) — Describes the video library messages contract.
+- [VideoMessages](/api/staging/3.0.0/app/Main/Functional/RendererMessages/interfaces/VideoMessages/) — Describes the video messages contract.
+- [WebContentsViewTransferOptions](/api/staging/3.0.0/app/Main/Functional/WebContentsViewTransfer/interfaces/WebContentsViewTransferOptions/) — Describes the web contents view transfer options contract.
+
+## Functions
+
+- [captureInternalVideoPictureInPicturePlacement()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/captureInternalVideoPictureInPicturePlacement/) — Performs the capture internal video picture in picture placement operation.
+- [capturePictureInPicturePlacement()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/capturePictureInPicturePlacement/) — Performs the capture picture in picture placement operation.
+- [clearSessionCaches()](/api/staging/3.0.0/app/Main/Functional/ApplicationData/functions/clearSessionCaches/) — Clears the session caches.
+- [clearSessionStorage()](/api/staging/3.0.0/app/Main/Functional/ApplicationData/functions/clearSessionStorage/) — Clears the session storage.
+- [cloneDevelopmentProjectInfo()](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/functions/cloneDevelopmentProjectInfo/) — Performs the clone development project info operation.
+- [cloneLocalizedText()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/cloneLocalizedText/) — Performs the clone localized text operation.
+- [collectBundlePermissions()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/collectBundlePermissions/) — Collects the bundle permissions.
+- [compareSemVer()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/compareSemVer/) — Performs the compare sem ver operation.
+- [compareVideoDirectoryEntries()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/compareVideoDirectoryEntries/) — Performs the compare video directory entries operation.
+- [configureUserDataPaths()](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/functions/configureUserDataPaths/) — Performs the configure user data paths operation.
+- [confirmClearAllProfiles()](/api/staging/3.0.0/app/Main/Functional/ApplicationData/functions/confirmClearAllProfiles/) — Performs the confirm clear all profiles operation.
+- [confirmDataClear()](/api/staging/3.0.0/app/Main/Functional/ApplicationData/functions/confirmDataClear/) — Performs the confirm data clear operation.
+- [confirmDataReset()](/api/staging/3.0.0/app/Main/Functional/ApplicationData/functions/confirmDataReset/) — Performs the confirm data reset operation.
+- [createAcceptLanguage()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/createAcceptLanguage/) — Creates the accept language.
+- [createApplicationManagerContainer()](/api/staging/3.0.0/app/Main/DependencyInjection/ApplicationManagers/functions/createApplicationManagerContainer/) — Creates the application manager container.
+- [createBundleInfo()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/createBundleInfo/) — Creates the bundle info.
+- [createCookieJarFingerprint()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/createCookieJarFingerprint/) — Creates the cookie jar fingerprint.
+- [createEnterUnifiedPictureInPictureHostScript()](/api/staging/3.0.0/app/Main/Inject/UnifiedPictureInPicturePage/functions/createEnterUnifiedPictureInPictureHostScript/) — Creates the enter unified picture in picture host script.
+- [createEnterUnifiedPictureInPictureScript()](/api/staging/3.0.0/app/Main/Inject/UnifiedPictureInPicturePage/functions/createEnterUnifiedPictureInPictureScript/) — Creates the enter unified picture in picture script.
+- [createExitUnifiedPictureInPictureHostScript()](/api/staging/3.0.0/app/Main/Inject/PictureInPictureControls/functions/createExitUnifiedPictureInPictureHostScript/) — Creates the exit unified picture in picture host script.
+- [createExitUnifiedPictureInPictureScript()](/api/staging/3.0.0/app/Main/Inject/PictureInPictureControls/functions/createExitUnifiedPictureInPictureScript/) — Creates the exit unified picture in picture script.
+- [createExternalDownloaderDeepLink()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/createExternalDownloaderDeepLink/) — Creates the external downloader deep link.
+- [createFindPictureInPictureVideoScript()](/api/staging/3.0.0/app/Main/Inject/PictureInPictureVideo/functions/createFindPictureInPictureVideoScript/) — Creates the find picture in picture video script.
+- [createInspectedInfo()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/createInspectedInfo/) — Creates the inspected info.
+- [createIsolatedRuntime()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/createIsolatedRuntime/) — Creates the isolated runtime.
+- [createLocalVideoRequest()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/createLocalVideoRequest/) — Creates the local video request.
+- [createManagerToken()](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/functions/createManagerToken/) — Creates the manager token.
+- [createPagePictureInPicturePolicyInjectionScript()](/api/staging/3.0.0/app/Main/Inject/PagePictureInPicturePolicy/functions/createPagePictureInPicturePolicyInjectionScript/) — Creates the page picture in picture policy injection script.
+- [createPagePictureInPicturePolicyScript()](/api/staging/3.0.0/app/Main/Functional/PagePictureInPicturePolicy/functions/createPagePictureInPicturePolicyScript/) — Resolves application defaults and Provider selector declarations.
+- [createPauseDocumentVideosScript()](/api/staging/3.0.0/app/Main/Inject/PictureInPictureControls/functions/createPauseDocumentVideosScript/) — Creates the pause document videos script.
+- [createPluginBrowserProfileId()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/createPluginBrowserProfileId/) — Creates the plugin browser profile ID.
+- [createRefreshUnifiedPictureInPictureVideoScript()](/api/staging/3.0.0/app/Main/Inject/UnifiedPictureInPicturePage/functions/createRefreshUnifiedPictureInPictureVideoScript/) — Creates the refresh unified picture in picture video script.
+- [createRemoteThemeBridgeInjectionScript()](/api/staging/3.0.0/app/Main/Inject/RemoteTheme/functions/createRemoteThemeBridgeInjectionScript/) — Creates the remote theme bridge injection script.
+- [createSetPictureInPictureControlsVisibleScript()](/api/staging/3.0.0/app/Main/Inject/PictureInPictureControls/functions/createSetPictureInPictureControlsVisibleScript/) — Creates the set picture in picture controls visible script.
+- [createSharedRuntime()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/createSharedRuntime/) — Creates the shared runtime.
+- [createSiteCookieStore()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/createSiteCookieStore/) — Creates the site cookie store.
+- [createSitePagePipeline()](/api/staging/3.0.0/app/Main/Functional/SitePagePipeline/functions/createSitePagePipeline/) — Build the page-world execution pipeline owned by one active Site view.
+- [createTogglePictureInPicturePlaybackScript()](/api/staging/3.0.0/app/Main/Inject/PictureInPictureControls/functions/createTogglePictureInPicturePlaybackScript/) — Creates the toggle picture in picture playback script.
+- [createVideoEntry()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/createVideoEntry/) — Creates the video entry.
+- [delay()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/delay/) — Performs the delay operation.
+- [disableMacOSFullScreenAuxiliary()](/api/staging/3.0.0/app/Main/Functional/MacOSWindowSpaces/functions/disableMacOSFullScreenAuxiliary/) — Performs the disable mac OS full screen auxiliary operation.
+- [downloadBundleArchive()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/downloadBundleArchive/) — Performs the download bundle archive operation.
+- [downloadExternalDownloaderWindowsInstaller()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/downloadExternalDownloaderWindowsInstaller/) — Performs the download external downloader Windows installer operation.
+- [enableMacOSFullScreenAuxiliary()](/api/staging/3.0.0/app/Main/Functional/MacOSWindowSpaces/functions/enableMacOSFullScreenAuxiliary/) — Performs the enable mac OS full screen auxiliary operation.
+- [ensureSiteApiBridge()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/ensureSiteApiBridge/) — Ensures the site API bridge.
+- [evictRequireCache()](/api/staging/3.0.0/app/Main/Functional/ModuleCache/functions/evictRequireCache/) — Performs the evict require cache operation.
+- [extractArchive()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/extractArchive/) — Performs the extract archive operation.
+- [fetchExternalDownloaderReleaseManifest()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/fetchExternalDownloaderReleaseManifest/) — Performs the fetch external downloader release manifest operation.
+- [filterExistingFolders()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/filterExistingFolders/) — Performs the filter existing folders operation.
+- [filterExistingVideos()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/filterExistingVideos/) — Performs the filter existing videos operation.
+- [findBundleRoot()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/findBundleRoot/) — Finds the bundle root.
+- [findInstalledExternalDownloaderApp()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/findInstalledExternalDownloaderApp/) — Finds the installed external downloader app.
+- [fitPictureInPictureSize()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/fitPictureInPictureSize/) — Performs the fit picture in picture size operation.
+- [formatConsoleSource()](/api/staging/3.0.0/app/Main/Functional/Logging/functions/formatConsoleSource/) — Formats the console source.
+- [formatObservedUrl()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/formatObservedUrl/) — Formats the observed URL.
+- [getAppMessages()](/api/staging/3.0.0/app/Main/Functional/RendererMessages/functions/getAppMessages/) — Returns the app messages.
+- [getBundleActionCopy()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/getBundleActionCopy/) — Returns the bundle action copy.
+- [getBundleUpdateDefinition()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/getBundleUpdateDefinition/) — Returns the bundle update definition.
+- [getChooseDevelopmentProjectTitle()](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/functions/getChooseDevelopmentProjectTitle/) — Returns the choose development project title.
+- [getDirectoryDisplayName()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/getDirectoryDisplayName/) — Returns the directory display name.
+- [getExternalDownloaderPlatform()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/getExternalDownloaderPlatform/) — Returns the external downloader platform.
+- [getExternalLoginViewData()](/api/staging/3.0.0/app/Main/Functional/Locale/functions/getExternalLoginViewData/) — Returns the external login view data.
+- [getInstallCopy()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/getInstallCopy/) — Returns the install copy.
+- [getKawaiDataPath()](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/functions/getKawaiDataPath/) — Returns the kawai data path.
+- [getParentDirectory()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/getParentDirectory/) — Returns the parent directory.
+- [getRendererMessages()](/api/staging/3.0.0/app/Main/Functional/RendererMessages/functions/getRendererMessages/) — Returns the renderer messages.
+- [getUserDataLayout()](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/functions/getUserDataLayout/) — Returns the user data layout.
+- [getWindowContentViewBounds()](/api/staging/3.0.0/app/Main/Functional/WebContentsViewTransfer/functions/getWindowContentViewBounds/) — Returns the window content view bounds.
+- [handleNativeEditingShortcut()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/handleNativeEditingShortcut/) — Restore standard text-editing accelerators after removing Electron's menu.
+- [initializeApplication()](/api/staging/3.0.0/app/Main/Functional/ApplicationInitialization/functions/initializeApplication/) — Create, load, and connect managers after Electron is ready.
+- [initializeUserDataLayout()](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/functions/initializeUserDataLayout/) — Initializes the user data layout.
+- [inspectBundle()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/inspectBundle/) — Performs the inspect bundle operation.
+- [inspectPlugin()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/inspectPlugin/) — Performs the inspect plugin operation.
+- [installExternalDownloaderMacArtifact()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/installExternalDownloaderMacArtifact/) — Installs the external downloader mac artifact.
+- [isApplicationLinkId()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/isApplicationLinkId/) — Determines whether the application link ID condition applies.
+- [isDevToolsMode()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/isDevToolsMode/) — Determines whether the dev tools mode condition applies.
+- [isDirectory()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/isDirectory/) — Determines whether the directory condition applies.
+- [isExpectedNavigationInterruption()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/isExpectedNavigationInterruption/) — Determines whether the expected navigation interruption condition applies.
+- [isGoogleLoginCookie()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/isGoogleLoginCookie/) — Determines whether the google login cookie condition applies.
+- [isGoogleMultiLoginCookie()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/isGoogleMultiLoginCookie/) — Determines whether the google multi login cookie condition applies.
+- [isGraphicsRestartConfirmed()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/isGraphicsRestartConfirmed/) — Determines whether the graphics restart confirmed condition applies.
+- [isInspectableFrameUrl()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/isInspectableFrameUrl/) — Determines whether the inspectable frame URL condition applies.
+- [isNavigationAborted()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/isNavigationAborted/) — Determines whether the navigation aborted condition applies.
+- [isPathInside()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/isPathInside/) — Determines whether the path inside condition applies.
+- [isPointInside()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/isPointInside/) — Determines whether the point inside condition applies.
+- [isRepeatableShortFormNavigationShortcut()](/api/staging/3.0.0/app/Main/Functional/Shortcut/functions/isRepeatableShortFormNavigationShortcut/) — Determines whether the repeatable short form navigation shortcut condition applies.
+- [isVideoPath()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/isVideoPath/) — Determines whether the video path condition applies.
+- [isVisibleVideoDirectoryEntry()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/isVisibleVideoDirectoryEntry/) — Determines whether the visible video directory entry condition applies.
+- [isYouTubeLivePage()](/api/staging/3.0.0/app/Main/Functional/DeveloperLinks/functions/isYouTubeLivePage/) — Determines whether the you tube live page condition applies.
+- [isYouTubeUrl()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/isYouTubeUrl/) — Determines whether the you tube URL condition applies.
+- [listDriveLocations()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/listDriveLocations/) — Lists the drive locations.
+- [loadBundleDefinition()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/loadBundleDefinition/) — Loads the bundle definition.
+- [loadBundleUpdateDefinition()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/loadBundleUpdateDefinition/) — Loads the bundle update definition.
+- [loadConstructor()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/loadConstructor/) — Loads the function Object() { [native code] }.
+- [loadPluginDefinition()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/loadPluginDefinition/) — Loads the plugin definition.
+- [loadProviderDefinition()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/loadProviderDefinition/) — Loads the provider definition.
+- [loadUpdateResolver()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/loadUpdateResolver/) — Loads the update resolver.
+- [loadURLWithNavigationRecovery()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/loadURLWithNavigationRecovery/) — Loads the URL with navigation recovery.
+- [matchesAccelerator()](/api/staging/3.0.0/app/Main/Functional/Shortcut/functions/matchesAccelerator/) — Performs the matches accelerator operation.
+- [matchesVideoShortcutInput()](/api/staging/3.0.0/app/Main/Functional/Shortcut/functions/matchesVideoShortcutInput/) — Performs the matches video shortcut input operation.
+- [mergeValidatedPreferences()](/api/staging/3.0.0/app/Main/Functional/Preferences/functions/mergeValidatedPreferences/) — Merges the validated preferences.
+- [normalizeAddressInput()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/normalizeAddressInput/) — Normalizes the address input.
+- [normalizeCookieDomain()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/normalizeCookieDomain/) — Normalizes the cookie domain.
+- [normalizeReleaseNotes()](/api/staging/3.0.0/app/Main/Functional/ApplicationUpdates/functions/normalizeReleaseNotes/) — Normalizes the release notes.
+- [normalizeUpdateProgress()](/api/staging/3.0.0/app/Main/Functional/ApplicationUpdates/functions/normalizeUpdateProgress/) — Normalizes the update progress.
+- [normalizeVideoDimension()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/normalizeVideoDimension/) — Normalizes the video dimension.
+- [normalizeVideoPathKey()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/normalizeVideoPathKey/) — Normalizes the video path key.
+- [openInDefaultBrowser()](/api/staging/3.0.0/app/Main/Functional/DefaultBrowser/functions/openInDefaultBrowser/) — Open a web URL with the operating system's registered default browser. Keeping this in Main also prevents remote page content from invoking arbitrary external protocols through Electron's shell API.
+- [optionalBoundedString()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/optionalBoundedString/) — Performs the optional bounded string operation.
+- [parseExternalOpenArguments()](/api/staging/3.0.0/app/Main/Functional/ExternalOpen/functions/parseExternalOpenArguments/) — Parses the external open arguments.
+- [parseExternalOpenUrl()](/api/staging/3.0.0/app/Main/Functional/ExternalOpen/functions/parseExternalOpenUrl/) — Parses the external open URL.
+- [parsePictureInPictureEnterResult()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/parsePictureInPictureEnterResult/) — Parses the picture in picture enter result.
+- [parseVideoCandidate()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/parseVideoCandidate/) — Parses the video candidate.
+- [pathExists()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/pathExists/) — Performs the path exists operation.
+- [postInitializeApplication()](/api/staging/3.0.0/app/Main/Functional/ApplicationPostInitialization/functions/postInitializeApplication/) — Load the first UI/site and start services that depend on initialized managers.
+- [preInitializeApplication()](/api/staging/3.0.0/app/Main/Functional/ApplicationPreInitialization/functions/preInitializeApplication/) — Configure process-wide Electron behavior that must be set before ready.
+- [prepareCurrentDocumentForNavigation()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/prepareCurrentDocumentForNavigation/) — Prepares the current document for navigation.
+- [readBundleManifest()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/readBundleManifest/) — Reads the bundle manifest.
+- [readJson()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/readJson/) — Reads the JSON.
+- [readRequestedGraphicsMode()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/readRequestedGraphicsMode/) — Reads the requested graphics mode.
+- [readStartupGraphicsMode()](/api/staging/3.0.0/app/Main/Functional/Preferences/functions/readStartupGraphicsMode/) — Reads the startup graphics mode.
+- [removeIpcHandlers()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/removeIpcHandlers/) — Removes the IPC handlers.
+- [removeProjectDevelopmentOutput()](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/functions/removeProjectDevelopmentOutput/) — Removes the project development output.
+- [removeTemporaryProfile()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/removeTemporaryProfile/) — Removes the temporary profile.
+- [requestUserDataReset()](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/functions/requestUserDataReset/) — Defers deletion until the next process starts, before Chromium, logging, or PreferenceManager opens files beneath the data roots.
+- [requireAbsoluteVideoPath()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/requireAbsoluteVideoPath/) — Performs the require absolute video path operation.
+- [requireAppLocale()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/requireAppLocale/) — Performs the require app locale operation.
+- [requireAppTheme()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/requireAppTheme/) — Performs the require app theme operation.
+- [requireBoolean()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/requireBoolean/) — Performs the require boolean operation.
+- [requireBoundedString()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/requireBoundedString/) — Performs the require bounded string operation.
+- [requireDevelopmentProjectId()](/api/staging/3.0.0/app/Main/Functional/DevelopmentValidation/functions/requireDevelopmentProjectId/) — Performs the require development project ID operation.
+- [requireId()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/requireId/) — Performs the require ID operation.
+- [requireIdentifier()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/requireIdentifier/) — Performs the require identifier operation.
+- [requireJsonObject()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/requireJsonObject/) — Performs the require JSON object operation.
+- [requirePathString()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/requirePathString/) — Performs the require path string operation.
+- [requireSafeRelativePath()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/requireSafeRelativePath/) — Performs the require safe relative path operation.
+- [requireSearchQuery()](/api/staging/3.0.0/app/Main/Functional/IPCValidation/functions/requireSearchQuery/) — Performs the require search query operation.
+- [requireVersion()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/requireVersion/) — Performs the require version operation.
+- [requireYouTubeUrl()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/requireYouTubeUrl/) — Performs the require you tube URL operation.
+- [resolveAppLocale()](/api/staging/3.0.0/app/Main/Functional/Locale/functions/resolveAppLocale/) — Resolves the app locale.
+- [resolveBundleUpdateUrl()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/resolveBundleUpdateUrl/) — Resolves the bundle update URL.
+- [resolveEnvironmentLogLevel()](/api/staging/3.0.0/app/Main/Functional/Logging/functions/resolveEnvironmentLogLevel/) — Resolves the environment log level.
+- [resolveGlobalLocale()](/api/staging/3.0.0/app/Main/Functional/ProviderLocale/functions/resolveGlobalLocale/) — Resolves the global locale.
+- [resolveGlobalMousePoint()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/resolveGlobalMousePoint/) — Resolves the global mouse point.
+- [resolveInternalVideoPictureInPictureBounds()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/resolveInternalVideoPictureInPictureBounds/) — Resolves the internal video picture in picture bounds.
+- [resolveLogLevel()](/api/staging/3.0.0/app/Main/Functional/Logging/functions/resolveLogLevel/) — Resolves the log level.
+- [resolveMpvAddonPath()](/api/staging/3.0.0/app/Main/Functional/WindowOperations/functions/resolveMpvAddonPath/) — Resolves the MPV addon path.
+- [resolveOwnedDirectory()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/resolveOwnedDirectory/) — Resolves the owned directory.
+- [resolveOwnedEntry()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/resolveOwnedEntry/) — Resolves the owned entry.
+- [resolvePictureInPictureBounds()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/resolvePictureInPictureBounds/) — Resolves the picture in picture bounds.
+- [resolvePictureInPictureDisplay()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/resolvePictureInPictureDisplay/) — Resolves the picture in picture display.
+- [resolvePictureInPictureOverlaySelectors()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureOverlays/functions/resolvePictureInPictureOverlaySelectors/) — Resolves the picture in picture overlay selectors.
+- [resolveProviderLocaleContributions()](/api/staging/3.0.0/app/Main/Functional/ProviderLocale/functions/resolveProviderLocaleContributions/) — Resolves the provider locale contributions.
+- [runExternalDownloaderCommand()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/runExternalDownloaderCommand/) — Runs the external downloader command.
+- [sanitizeLogValue()](/api/staging/3.0.0/app/Main/Functional/Logging/functions/sanitizeLogValue/) — Performs the sanitize log value operation.
+- [selectExternalDownloaderArtifact()](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/functions/selectExternalDownloaderArtifact/) — Selects the external downloader artifact.
+- [serializePageInjection()](/api/staging/3.0.0/app/Main/Inject/Serialize/functions/serializePageInjection/) — Serialize a self-contained, typed function for Electron's remote page world. Main/Inject modules use this boundary before their scripts reach WebContents.executeJavaScript or WebFrameMain.executeJavaScript. Entry functions must not close over runtime values; pass those through the options overload so TypeScript and JSON serialization keep the boundary explicit.
+- [serializePageInjectionWithOptions()](/api/staging/3.0.0/app/Main/Inject/Serialize/functions/serializePageInjectionWithOptions/) — Serializes the page injection with options.
+- [setHeader()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/setHeader/) — Sets the header.
+- [shouldSuppressPagePictureInPicture()](/api/staging/3.0.0/app/Main/Functional/PagePictureInPicturePolicy/functions/shouldSuppressPagePictureInPicture/) — Determines whether the suppress page picture in picture condition applies.
+- [supportsShortFormShortcut()](/api/staging/3.0.0/app/Main/Functional/Shortcut/functions/supportsShortFormShortcut/) — Performs the supports short form shortcut operation.
+- [toDevelopmentErrorMessage()](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/functions/toDevelopmentErrorMessage/) — Performs the to development error message operation.
+- [toErrorMessage()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/toErrorMessage/) — Performs the to error message operation.
+- [transferWebContentsView()](/api/staging/3.0.0/app/Main/Functional/WebContentsViewTransfer/functions/transferWebContentsView/) — Reparents a WebContentsView only after its target native window is visible, then gives Chromium time to submit frames for the new view hierarchy. Keeping this sequence platform-neutral avoids separate macOS and Windows PiP flows.
+- [trimVideoLibraryFolders()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/trimVideoLibraryFolders/) — Performs the trim video library folders operation.
+- [validateArchiveEntryPath()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateArchiveEntryPath/) — Validates the archive entry path.
+- [validateBrowserProfiles()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateBrowserProfiles/) — Validates the browser profiles.
+- [validateBundleManifest()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateBundleManifest/) — Validates the bundle manifest.
+- [validateBundleUpdateManifest()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateBundleUpdateManifest/) — Validates the bundle update manifest.
+- [validateDevelopmentInspectorPort()](/api/staging/3.0.0/app/Main/Functional/DevelopmentValidation/functions/validateDevelopmentInspectorPort/) — Validates the development inspector port.
+- [validateExtractedTree()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateExtractedTree/) — Validates the extracted tree.
+- [validateIdArray()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateIdArray/) — Validates the ID array.
+- [validateLocale()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateLocale/) — Validates the locale.
+- [validateMain()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateMain/) — Validates the main.
+- [validateManifestHeader()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateManifestHeader/) — Validates the manifest header.
+- [validatePanelContributions()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/validatePanelContributions/) — Validates the panel contributions.
+- [validatePathArray()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validatePathArray/) — Validates the path array.
+- [validatePermissions()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validatePermissions/) — Validates the permissions.
+- [validatePluginManifest()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validatePluginManifest/) — Validates the plugin manifest.
+- [validateProviderContributions()](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/functions/validateProviderContributions/) — Validates the provider contributions.
+- [validateProviderLocaleContribution()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/validateProviderLocaleContribution/) — Validates the provider locale contribution.
+- [validateProviderLocaleResource()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/validateProviderLocaleResource/) — Validates the provider locale resource.
+- [validateProviderManifest()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateProviderManifest/) — Validates the provider manifest.
+- [validateProviderManifestContributions()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateProviderManifestContributions/) — Validates the provider manifest contributions.
+- [validateResetOrigins()](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/functions/validateResetOrigins/) — Validates the reset origins.
+- [validateStoredVideoLibraryState()](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/functions/validateStoredVideoLibraryState/) — Validates the stored video library state.
+- [validateStringArray()](/api/staging/3.0.0/app/Main/Functional/BundleValidation/functions/validateStringArray/) — Validates the string array.
+- [validateUpdateUrl()](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/functions/validateUpdateUrl/) — Validates the update URL.
+- [withPictureInPictureWindowMode()](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/functions/withPictureInPictureWindowMode/) — Performs the with picture in picture window mode operation.
+
+## Type Aliases
+
+- [BundleReleaseChannel](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/BundleReleaseChannel/) — Defines the bundle release channel type.
+- [BundleUpdateDefinition](/api/staging/3.0.0/app/Main/Manager/BundleManager/InternalDeclarations/type-aliases/BundleUpdateDefinition/) — Validated runtime form of Bundle update metadata.
+- [BundleUpdateManifest](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/BundleUpdateManifest/) — Update metadata stored in the top-level Bundle manifest.
+- [BundleUpdateResolver](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/BundleUpdateResolver/) — Defines the bundle update resolver type.
+- [ClearTargetKind](/api/staging/3.0.0/app/Main/Functional/ApplicationData/InternalDeclarations/type-aliases/ClearTargetKind/) — Defines the clear target kind type.
+- [ExternalLoginResult](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/ExternalLoginResult/) — Defines the external login result type.
+- [ManagerFactory\](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/type-aliases/ManagerFactory/) — Defines the manager factory type.
+- [NewWindowPolicy](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/NewWindowPolicy/) — Defines the new window policy type.
+- [PictureInPictureManagerFactory](/api/staging/3.0.0/app/Main/Functional/WindowRuntime/type-aliases/PictureInPictureManagerFactory/) — Defines the picture in picture manager factory type.
+- [PluginConstructor](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/PluginConstructor/) — Defines the plugin function Object() { [native code] } type.
+- [PluginViewPanelContent](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/PluginViewPanelContent/) — Defines the plugin view panel content type.
+- [ProviderConstructor](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/ProviderConstructor/) — Defines the provider function Object() { [native code] } type.
+- [ProviderDecoratorMetadata](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/ProviderDecoratorMetadata/) — Code-owned Provider contributions. Keep installation/discovery metadata in the manifest; settings and site-specific runtime policy belong here, with translated copy imported from the Provider's locale resource.
+- [ProviderLocaleResource](/api/staging/3.0.0/app/Main/Functional/BundleValidation/InternalDeclarations/type-aliases/ProviderLocaleResource/) — Defines the provider locale resource type.
+- [ProviderManifestContributions](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/ProviderManifestContributions/) — Defines the provider manifest contributions type.
+- [ProviderSettings](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/ProviderSettings/) — Defines the provider settings type.
+- [ResetKind](/api/staging/3.0.0/app/Main/Functional/ApplicationData/InternalDeclarations/type-aliases/ResetKind/) — Defines the reset kind type.
+- [SiteContextFactory](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/type-aliases/SiteContextFactory/) — Defines the site context factory type.
+- [SitePageFrameScope](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/SitePageFrameScope/) — Defines the site page frame scope type.
+- [SitePagePhase](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/SitePagePhase/) — Defines the site page phase type.
+- [SitePermission](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/InternalDeclarations/type-aliases/SitePermission/) — Defines the site permission type.
+- [SiteRequestHeaders](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/type-aliases/SiteRequestHeaders/) — Defines the site request headers type.
+- [UnresolvedProviderMetadata](/api/staging/3.0.0/app/Main/Functional/ProviderLocale/InternalDeclarations/type-aliases/UnresolvedProviderMetadata/) — Defines the unresolved provider metadata type.
+- [UserDataResetMode](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/type-aliases/UserDataResetMode/) — Defines the user data reset mode type.
+
+## Variables
+
+- [DEFAULT_PREFERENCES](/api/staging/3.0.0/app/Main/Functional/Preferences/variables/DEFAULT_PREFERENCES/) — Defines the shared default preferences constant.
+- [EMPTY_VIDEO_LIBRARY_STATE](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/variables/EMPTY_VIDEO_LIBRARY_STATE/) — Defines the shared empty video library state constant.
+- [EXTERNAL_DOWNLOADER_APP_NAME](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/variables/EXTERNAL_DOWNLOADER_APP_NAME/) — Defines the shared external downloader app name constant.
+- [EXTERNAL_DOWNLOADER_RELEASES_PAGE](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/variables/EXTERNAL_DOWNLOADER_RELEASES_PAGE/) — Defines the shared external downloader releases page constant.
+- [KAWAIKARA_PROTOCOL](/api/staging/3.0.0/app/Main/Functional/ExternalOpen/variables/KAWAIKARA_PROTOCOL/) — Defines the shared Kawaikara protocol constant.
+- [MANAGER_TOKENS](/api/staging/3.0.0/app/Main/DependencyInjection/ApplicationManagers/variables/MANAGER_TOKENS/) — Defines the shared manager tokens constant.
+- [MAX_ARCHIVE_BYTES](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/variables/MAX_ARCHIVE_BYTES/) — Defines the shared max archive bytes constant.
+- [MAX_PATH_LENGTH](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/variables/MAX_PATH_LENGTH/) — Defines the shared max path length constant.
+- [MAX_RECENT_VIDEOS](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/variables/MAX_RECENT_VIDEOS/) — Defines the shared max recent videos constant.
+- [PAUSE_DOCUMENT_MEDIA_SCRIPT](/api/staging/3.0.0/app/Main/Inject/MediaCleanup/variables/PAUSE_DOCUMENT_MEDIA_SCRIPT/) — Defines the shared pause document media script constant.
+- [STANDARD_PICTURE_IN_PICTURE_OVERLAY_SELECTORS](/api/staging/3.0.0/app/Main/Functional/PictureInPictureOverlays/variables/STANDARD_PICTURE_IN_PICTURE_OVERLAY_SELECTORS/) — DOM-rendered caption layers automatically retained in every unified PiP. Native WebVTT cues painted by the video element do not need a selector. Providers only declare selectors unique to their player.
+- [WAIT_FOR_VISIBLE_RENDERER_FRAMES_SCRIPT](/api/staging/3.0.0/app/Main/Inject/RendererFrames/variables/WAIT_FOR_VISIBLE_RENDERER_FRAMES_SCRIPT/) — Defines the shared wait for visible renderer frames script constant.
+
+## Modules
+
+- [ApplicationData](/api/staging/3.0.0/app/Main/Functional/ApplicationData/)
+- [ApplicationDataManager](/api/staging/3.0.0/app/Main/Manager/ApplicationDataManager/)
+- [ApplicationInitialization](/api/staging/3.0.0/app/Main/Functional/ApplicationInitialization/)
+- [ApplicationLifecycleManager](/api/staging/3.0.0/app/Main/Manager/ApplicationLifecycleManager/)
+- [ApplicationManagers](/api/staging/3.0.0/app/Main/DependencyInjection/ApplicationManagers/)
+- [ApplicationPostInitialization](/api/staging/3.0.0/app/Main/Functional/ApplicationPostInitialization/)
+- [ApplicationPreInitialization](/api/staging/3.0.0/app/Main/Functional/ApplicationPreInitialization/)
+- [ApplicationUpdates](/api/staging/3.0.0/app/Main/Functional/ApplicationUpdates/)
+- [BundleDevelopment](/api/staging/3.0.0/app/Main/Functional/BundleDevelopment/)
+- [BundleDevelopmentManager](/api/staging/3.0.0/app/Main/Manager/BundleDevelopmentManager/)
+- [BundleManager](/api/staging/3.0.0/app/Main/Manager/BundleManager/)
+- [BundleRuntime](/api/staging/3.0.0/app/Main/Functional/BundleRuntime/)
+- [BundleValidation](/api/staging/3.0.0/app/Main/Functional/BundleValidation/)
+- [DefaultBrowser](/api/staging/3.0.0/app/Main/Functional/DefaultBrowser/)
+- [DeveloperLinkManager](/api/staging/3.0.0/app/Main/Manager/DeveloperLinkManager/)
+- [DeveloperLinks · Main / Functional](/api/staging/3.0.0/app/Main/Functional/DeveloperLinks/)
+- [DevelopmentValidation](/api/staging/3.0.0/app/Main/Functional/DevelopmentValidation/)
+- [DiscordPresenceManager](/api/staging/3.0.0/app/Main/Manager/DiscordPresenceManager/)
+- [ExternalBrowser](/api/staging/3.0.0/app/Main/Functional/ExternalBrowser/)
+- [ExternalBrowserManager](/api/staging/3.0.0/app/Main/Manager/ExternalBrowserManager/)
+- [ExternalDownloader](/api/staging/3.0.0/app/Main/Functional/ExternalDownloader/)
+- [ExternalDownloaderManager](/api/staging/3.0.0/app/Main/Manager/ExternalDownloaderManager/)
+- [ExternalOpen](/api/staging/3.0.0/app/Main/Functional/ExternalOpen/)
+- [IPCManager](/api/staging/3.0.0/app/Main/Manager/IPCManager/)
+- [IPCValidation](/api/staging/3.0.0/app/Main/Functional/IPCValidation/)
+- [Locale](/api/staging/3.0.0/app/Main/Functional/Locale/)
+- [Logging](/api/staging/3.0.0/app/Main/Functional/Logging/)
+- [LoggingManager](/api/staging/3.0.0/app/Main/Manager/LoggingManager/)
+- [MacOSWindowSpaces](/api/staging/3.0.0/app/Main/Functional/MacOSWindowSpaces/)
+- [Main](/api/staging/3.0.0/app/Main/Main/)
+- [ManagerContainer](/api/staging/3.0.0/app/Main/DependencyInjection/ManagerContainer/)
+- [MediaCleanup](/api/staging/3.0.0/app/Main/Inject/MediaCleanup/)
+- [ModuleCache](/api/staging/3.0.0/app/Main/Functional/ModuleCache/)
+- [PagePictureInPicturePolicy · Main / Functional](/api/staging/3.0.0/app/Main/Functional/PagePictureInPicturePolicy/)
+- [PagePictureInPicturePolicy · Main / Inject](/api/staging/3.0.0/app/Main/Inject/PagePictureInPicturePolicy/)
+- [PictureInPictureControls](/api/staging/3.0.0/app/Main/Inject/PictureInPictureControls/)
+- [PictureInPictureOverlays](/api/staging/3.0.0/app/Main/Functional/PictureInPictureOverlays/)
+- [PictureInPictureRuntime](/api/staging/3.0.0/app/Main/Functional/PictureInPictureRuntime/)
+- [PictureInPictureVideo](/api/staging/3.0.0/app/Main/Inject/PictureInPictureVideo/)
+- [PluginHost](/api/staging/3.0.0/app/Main/Plugin/PluginHost/)
+- [PreferenceManager](/api/staging/3.0.0/app/Main/Manager/PreferenceManager/)
+- [Preferences](/api/staging/3.0.0/app/Main/Functional/Preferences/)
+- [ProviderLocale](/api/staging/3.0.0/app/Main/Functional/ProviderLocale/)
+- [RemoteTheme](/api/staging/3.0.0/app/Main/Inject/RemoteTheme/)
+- [RendererFrames](/api/staging/3.0.0/app/Main/Inject/RendererFrames/)
+- [RendererMessages](/api/staging/3.0.0/app/Main/Functional/RendererMessages/)
+- [Serialize](/api/staging/3.0.0/app/Main/Inject/Serialize/)
+- [Shortcut](/api/staging/3.0.0/app/Main/Functional/Shortcut/)
+- [ShortcutManager](/api/staging/3.0.0/app/Main/Manager/ShortcutManager/)
+- [SiteManager](/api/staging/3.0.0/app/Main/Manager/SiteManager/)
+- [SitePagePipeline](/api/staging/3.0.0/app/Main/Functional/SitePagePipeline/)
+- [SiteRuntime](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/)
+- [UnifiedPictureInPictureManager](/api/staging/3.0.0/app/Main/Manager/UnifiedPictureInPictureManager/)
+- [UnifiedPictureInPicturePage](/api/staging/3.0.0/app/Main/Inject/UnifiedPictureInPicturePage/)
+- [UpdateManager](/api/staging/3.0.0/app/Main/Manager/UpdateManager/)
+- [UserDataPaths](/api/staging/3.0.0/app/Main/Functional/UserDataPaths/)
+- [VideoLibrary](/api/staging/3.0.0/app/Main/Functional/VideoLibrary/)
+- [VideoLibraryManager](/api/staging/3.0.0/app/Main/Manager/VideoLibraryManager/)
+- [WebContentsViewTransfer](/api/staging/3.0.0/app/Main/Functional/WebContentsViewTransfer/)
+- [WindowManager](/api/staging/3.0.0/app/Main/Manager/WindowManager/)
+- [WindowOperations](/api/staging/3.0.0/app/Main/Functional/WindowOperations/)
+- [WindowRuntime](/api/staging/3.0.0/app/Main/Functional/WindowRuntime/)
+
+## References
+
+- [Abstract Class: AbstractPlugin](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/classes/AbstractPlugin/) — Represents the abstract plugin.
+- [Abstract Class: AbstractProvider](/api/staging/3.0.0/app/Main/Functional/SiteRuntime/InternalDeclarations/classes/AbstractProvider/) — Implements the abstract site provider.

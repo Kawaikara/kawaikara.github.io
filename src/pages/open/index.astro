@@ -1,0 +1,256 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="Kawaikara에서 열기"
+  description="공유받은 영상과 스트리밍 페이지를 Kawaikara 데스크톱 앱에서 여세요."
+  titleKey="meta.open.title"
+  descriptionKey="meta.open.description"
+  canonicalPath="/open/"
+>
+  <section class="open-shell">
+    <div class="open-card" data-open-card>
+      <div class="status-light" aria-hidden="true"></div>
+      <span class="eyebrow">Open in Kawaikara</span>
+      <h1 data-heading data-i18n-html="open.heading.checking">Kawaikara에서<br />링크를 엽니다.</h1>
+      <p class="description" data-description data-i18n="open.description.checking">
+        공유된 주소를 확인하고 있습니다. 잠시만 기다려 주세요.
+      </p>
+
+      <div class="target" data-target hidden>
+        <span data-site-name data-i18n="open.site.fallback">지원 서비스</span>
+        <strong data-target-host></strong>
+        <code data-target-url></code>
+      </div>
+
+      <div class="actions">
+        <a class="button button--primary" data-open-button aria-disabled="true" data-i18n="open.action.open">Kawaikara에서 열기</a>
+        <a class="button button--secondary" data-original-button target="_blank" rel="noreferrer" hidden data-i18n="open.action.web">웹에서 보기</a>
+      </div>
+
+      <p class="fallback" data-fallback hidden data-i18n-html="open.fallback">
+        앱이 열리지 않나요?
+        <a href="https://github.com/fabyday/kawaikara/releases/latest" target="_blank" rel="noreferrer">Kawaikara를 먼저 설치하세요.</a>
+      </p>
+      <noscript>이 페이지에서 Kawaikara 링크를 열려면 JavaScript가 필요합니다.</noscript>
+    </div>
+  </section>
+
+  <script>
+    import { normalizeLocale, translate } from '../../i18n/messages';
+
+    const activeLocale = normalizeLocale(document.documentElement.lang) ?? 'ko';
+    const pageText = (key: string, params: Record<string, string> = {}) => translate(activeLocale, key, params);
+    const SITE_RULES = [
+      { name: 'YouTube Music', domains: ['music.youtube.com'] },
+      { name: 'Apple Music', domains: ['music.apple.com'] },
+      { name: 'Apple TV+', domains: ['tv.apple.com'] },
+      { name: 'CHZZK', domains: ['chzzk.naver.com'] },
+      { name: 'Spotify', domains: ['open.spotify.com'] },
+      { name: 'YouTube', domains: ['youtube.com', 'youtu.be'] },
+      { name: 'Netflix', domains: ['netflix.com'] },
+      { name: 'Laftel', domains: ['laftel.net'] },
+      { name: 'Disney+', domains: ['disneyplus.com'] },
+      { name: 'Prime Video', domains: ['primevideo.com'] },
+      { name: 'Wavve', domains: ['wavve.com'] },
+      { name: 'Watcha', domains: ['watcha.com'] },
+      { name: 'Coupang Play', domains: ['coupangplay.com'] },
+      { name: 'TVING', domains: ['tving.com'] },
+      { name: 'Crunchyroll', domains: ['crunchyroll.com'] },
+      { name: 'Twitch', domains: ['twitch.tv'] },
+      { name: 'RIDI', domains: ['ridibooks.com'] },
+    ];
+
+    const card = document.querySelector('[data-open-card]');
+    const heading = document.querySelector('[data-heading]');
+    const description = document.querySelector('[data-description]');
+    const targetPanel = document.querySelector('[data-target]');
+    const siteName = document.querySelector('[data-site-name]');
+    const targetHost = document.querySelector('[data-target-host]');
+    const targetUrl = document.querySelector('[data-target-url]');
+    const openButton = document.querySelector('[data-open-button]');
+    const originalButton = document.querySelector('[data-original-button]');
+    const fallback = document.querySelector('[data-fallback]');
+
+    const domainMatches = (hostname: string, domain: string) =>
+      hostname === domain || hostname.endsWith(`.${domain}`);
+
+    function fail(message: string) {
+      card?.classList.add('is-error');
+      if (heading) {
+        heading.removeAttribute('data-i18n-html');
+        heading.textContent = pageText('open.error.heading');
+      }
+      if (description) {
+        description.removeAttribute('data-i18n');
+        description.textContent = message;
+      }
+      openButton?.setAttribute('aria-disabled', 'true');
+    }
+
+    try {
+      const rawTarget = new URL(window.location.href).searchParams.get('url');
+      if (!rawTarget) {
+        fail(pageText('open.error.missing'));
+      } else if (rawTarget.length > 8192) {
+        fail(pageText('open.error.long'));
+      } else {
+        const parsedTarget = new URL(rawTarget);
+        const hostname = parsedTarget.hostname.toLowerCase();
+        const rule = SITE_RULES.find(({ domains }) =>
+          domains.some((domain) => domainMatches(hostname, domain)),
+        );
+
+        if (
+          parsedTarget.protocol !== 'https:' ||
+          parsedTarget.username ||
+          parsedTarget.password ||
+          parsedTarget.port ||
+          !rule
+        ) {
+          fail(pageText('open.error.unsupported'));
+        } else {
+          const deepLink = new URL('kawaikara://open');
+          deepLink.searchParams.set('url', parsedTarget.href);
+
+          card?.classList.add('is-ready');
+          if (heading) {
+            heading.removeAttribute('data-i18n-html');
+            heading.textContent = pageText('open.ready.heading', { service: rule.name });
+          }
+          if (description) {
+            description.removeAttribute('data-i18n');
+            description.textContent = pageText('open.ready.description');
+          }
+          if (siteName) siteName.textContent = rule.name;
+          if (targetHost) targetHost.textContent = hostname;
+          if (targetUrl) targetUrl.textContent = parsedTarget.href;
+          if (targetPanel instanceof HTMLElement) targetPanel.hidden = false;
+          if (openButton instanceof HTMLAnchorElement) {
+            openButton.href = deepLink.href;
+            openButton.removeAttribute('aria-disabled');
+          }
+          if (originalButton instanceof HTMLAnchorElement) {
+            originalButton.href = parsedTarget.href;
+            originalButton.hidden = false;
+          }
+          if (fallback instanceof HTMLElement) fallback.hidden = false;
+        }
+      }
+    } catch {
+      fail(pageText('open.error.invalid'));
+    }
+  </script>
+</SiteLayout>
+
+<style>
+  .open-shell {
+    align-items: center;
+    display: grid;
+    min-height: calc(100vh - 10.5rem);
+    padding: clamp(3rem, 9vw, 8rem) 1.1rem;
+    place-items: center;
+  }
+
+  .open-card {
+    background: var(--kc-surface-raised);
+    border: 1px solid var(--kc-border);
+    border-radius: 2rem;
+    box-shadow: 0 3rem 8rem rgb(0 0 0 / 40%);
+    max-width: 46rem;
+    overflow: hidden;
+    padding: clamp(2rem, 6vw, 4.5rem);
+    position: relative;
+    width: 100%;
+  }
+
+  .open-card::after {
+    background: var(--kc-violet);
+    content: "";
+    height: 0.35rem;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .open-card.is-ready::after { background: var(--kc-lime); }
+  .open-card.is-error::after { background: var(--kc-accent); }
+
+  .status-light {
+    background: var(--kc-violet);
+    box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--kc-violet) 15%, transparent);
+    height: 0.65rem;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    width: 0.65rem;
+  }
+
+  .is-ready .status-light { background: var(--kc-lime); }
+  .is-error .status-light { background: var(--kc-accent); }
+
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    letter-spacing: -0.065em;
+    line-height: 0.98;
+    margin: 1.5rem 0;
+    max-width: 38rem;
+  }
+
+  .description {
+    color: var(--kc-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .target {
+    background: #0e0c14;
+    border: 1px solid var(--kc-border);
+    border-radius: 1rem;
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 2rem;
+    overflow: hidden;
+    padding: 1.15rem;
+  }
+
+  .target span {
+    color: var(--kc-accent);
+    font-family: var(--kc-font-mono);
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .target strong { font-size: 1rem; }
+  .target code {
+    color: var(--kc-muted);
+    font-size: 0.72rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .fallback {
+    color: var(--kc-muted);
+    font-size: 0.8rem;
+    margin: 1.3rem 0 0;
+  }
+
+  .fallback a { color: var(--kc-text); }
+
+  @media (max-width: 540px) {
+    .open-card { border-radius: 1.35rem; }
+    .actions { display: grid; }
+  }
+</style>

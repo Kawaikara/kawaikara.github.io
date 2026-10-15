@@ -1,0 +1,48 @@
+---
+import { Clock3, Film, ListVideo, Scissors } from '@lucide/astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import '../../styles/product.css';
+---
+
+<SiteLayout
+  title="YT Section Downloader — 필요한 장면만 저장"
+  description="YouTube 영상을 미리 보고 시작과 끝을 표시해 필요한 구간만 다양한 포맷으로 저장하세요."
+  titleKey="meta.downloader.title"
+  descriptionKey="meta.downloader.description"
+  canonicalPath="/yt-downloader/"
+>
+  <section class="product-hero" style="--product-accent: var(--kc-lime)">
+    <div class="product-copy" data-reveal>
+      <span class="eyebrow">YouTube utility</span>
+      <h1 data-i18n-html="downloader.hero.title">영상 전체 말고,<em>필요한 구간만.</em></h1>
+      <p data-i18n="downloader.hero.description">영상을 미리 보며 시작과 끝을 표시하고, 여러 구간을 큐에 담아 원하는 편집 포맷으로 순차 저장하는 데스크톱 도구입니다.</p>
+      <div class="product-actions">
+        <a class="button button--primary" href="/docs/yt-downloader/" data-i18n="downloader.hero.guide">사용 방법 보기</a>
+        <a class="button button--secondary" href="https://github.com/fabyday/yt-downloader" target="_blank" rel="noreferrer" data-i18n="downloader.hero.github">GitHub에서 보기</a>
+      </div>
+    </div>
+    <div class="product-panel" data-reveal data-parallax style="--reveal-delay: 100ms; --product-accent: var(--kc-lime)">
+      <span class="panel-label">Section queue / 03 clips</span>
+      <div class="panel-list">
+        <div class="panel-row"><span>A–S</span><strong>00:01:14 — 00:01:42</strong><small>H.264 MP4</small></div>
+        <div class="panel-row"><span>A–S</span><strong>00:04:08 — 00:04:31</strong><small>ProRes</small></div>
+        <div class="panel-row"><span>A–S</span><strong>00:09:52 — 00:10:16</strong><small>DNxHR</small></div>
+        <div class="panel-row"><span>→</span><strong data-i18n="downloader.panel.ready">큐 준비 완료</strong><small>yt-dlp + ffmpeg</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-section" style="--product-accent: var(--kc-lime)">
+    <div class="feature-heading" data-reveal><span class="eyebrow">Preview · Mark · Export</span><h2 data-i18n-html="downloader.features.title">찾고, 표시하고,<br />한 번에 저장하세요.</h2></div>
+    <div class="feature-grid">
+      <article class="feature-card" data-reveal><Clock3 size={27} /><h3 data-i18n="downloader.features.mark.title">정확한 구간 표시</h3><p data-i18n="downloader.features.mark.description">A와 S 단축키로 시작과 끝을 찍고 구간 반복 미리보기로 결과를 확인합니다.</p></article>
+      <article class="feature-card" data-reveal style="--reveal-delay: 80ms"><ListVideo size={27} /><h3 data-i18n="downloader.features.queue.title">여러 구간 큐</h3><p data-i18n="downloader.features.queue.description">한 영상의 여러 장면을 목록에 담아 순차 저장하고 중단된 작업을 이어갑니다.</p></article>
+      <article class="feature-card" data-reveal style="--reveal-delay: 160ms"><Film size={27} /><h3 data-i18n="downloader.features.preset.title">편집용 프리셋</h3><p data-i18n="downloader.features.preset.description">원본 유지, H.264 MP4, Premiere ProRes, DaVinci DNxHR 중 작업에 맞게 선택합니다.</p></article>
+    </div>
+  </section>
+
+  <section class="product-cta" style="--product-accent: var(--kc-lime)" data-reveal>
+    <h2 data-i18n-html="downloader.cta.title">원하는 장면을<br />정확하게 남기세요.</h2>
+    <a class="button" href="/docs/yt-downloader/"><Scissors size={18} /> <span data-i18n="downloader.cta.link">사용 문서</span></a>
+  </section>
+</SiteLayout>

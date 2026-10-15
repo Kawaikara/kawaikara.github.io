@@ -1,0 +1,38 @@
+---
+layout: ../../../layouts/DocsPageLayout.astro
+title: WebExtension 설치 · Kawaikara Docs
+description: Chrome과 Firefox용 Kawaikara WebExtension 설치 및 사용 안내입니다.
+titleKey: meta.docs.extension.title
+descriptionKey: meta.docs.extension.description
+---
+
+import I18n from '../../../components/I18n.astro';
+
+# <I18n keyName="docs.extension.title">WebExtension</I18n>
+
+<p className="doc-lead"><I18n keyName="docs.extension.lead">지원 사이트의 현재 페이지·영상·링크를 Kawaikara 앱으로 보내고 Discord에서 클릭할 수 있는 HTTPS 공유 링크를 복사합니다.</I18n></p>
+
+## <I18n keyName="docs.extension.chrome.title">Chrome 개발 버전 설치</I18n>
+
+<ol className="steps">
+  <li><I18n keyName="docs.extension.chrome1" html><a href="https://github.com/Kawaikara/KawaikaraWebExtension" target="_blank" rel="noreferrer">확장 저장소</a>를 내려받고 프로젝트에서 <code>npm run check</code>를 실행합니다.</I18n></li>
+  <li><I18n keyName="docs.extension.chrome2" html>Chrome 주소창에서 <code>chrome://extensions</code>를 열고 <strong>개발자 모드</strong>를 켭니다.</I18n></li>
+  <li><I18n keyName="docs.extension.chrome3" html><strong>압축해제된 확장 프로그램을 로드합니다</strong>를 선택하고 <code>dist/chrome</code> 폴더를 지정합니다.</I18n></li>
+  <li><I18n keyName="docs.extension.chrome4" html>이미 열려 있던 YouTube나 CHZZK 페이지를 새로고침합니다.</I18n></li>
+</ol>
+
+## <I18n keyName="docs.extension.firefox.title">Firefox 임시 설치</I18n>
+
+<ol className="steps">
+  <li><I18n keyName="docs.extension.firefox1" html><code>about:debugging#/runtime/this-firefox</code>를 엽니다.</I18n></li>
+  <li><I18n keyName="docs.extension.firefox2" html><strong>임시 부가 기능 로드</strong>를 선택합니다.</I18n></li>
+  <li><I18n keyName="docs.extension.firefox3" html><code>dist/firefox/manifest.json</code>을 지정합니다.</I18n></li>
+</ol>
+
+## <I18n keyName="docs.extension.menu.title">메뉴 사용법</I18n>
+
+- <I18n keyName="docs.extension.menu1" html><strong>Kawaikara에서 열기</strong>: 현재 페이지를 데스크톱 앱에서 바로 엽니다.</I18n>
+- <I18n keyName="docs.extension.menu2" html><strong>Kawaikara 링크 복사</strong>: Discord가 인식하는 <code>https://kawaikara.faby.day/open/?url=…</code> 링크를 복사합니다.</I18n>
+- <I18n keyName="docs.extension.menu3" html><strong>링크를 Kawaikara에서 열기</strong>: 우클릭한 링크의 대상 페이지를 엽니다.</I18n>
+
+<p className="note"><I18n keyName="docs.extension.note">YouTube와 CHZZK는 플레이어 자체 우클릭 메뉴 안에도 열기와 링크 복사 항목이 표시됩니다.</I18n></p>

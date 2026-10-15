@@ -1,0 +1,159 @@
+---
+import BrandMark from './BrandMark.astro';
+import DocumentationSearch from './DocumentationSearch.astro';
+import LocaleSelector from './LocaleSelector.astro';
+import { SiteHeader, ThemedSelect } from 'kawaichen';
+import { BookOpen, Braces } from '@lucide/astro';
+import {
+  documentationVersions,
+  getDocumentationDestination,
+  getVersionsForChannel,
+  type DocumentationChannel,
+  type DocumentationSection,
+  type DocumentationVersion,
+} from '../data/documentation';
+
+interface Props {
+  documentationSection?: DocumentationSection;
+  documentationVersion?: DocumentationVersion;
+}
+
+const { documentationSection = 'app-design', documentationVersion } = Astro.props;
+const channels: DocumentationChannel[] = ['stable', 'staging'];
+const channelDestinations = Object.fromEntries(
+  channels.map((channel) => {
+    const target = getVersionsForChannel(channel)[0];
+    return [channel, target ? getDocumentationDestination(target, documentationSection) : '/docs/'];
+  }),
+);
+const availableVersions = documentationVersion
+  ? getVersionsForChannel(documentationVersion.channel)
+  : documentationVersions;
+const channelOptions = channels.map((channel) => ({
+  disabled: !getVersionsForChannel(channel).length,
+  label: getVersionsForChannel(channel)[0]?.sourceRef === 'working-tree'
+    ? 'dev preview'
+    : channel,
+  value: channelDestinations[channel],
+}));
+const versionOptions = availableVersions.map((version) => ({
+  label: version.version,
+  value: getDocumentationDestination(version, documentationSection),
+}));
+---
+
+<SiteHeader site={{ title: 'Kawaikara', homeHref: '/' }}>
+  <a class="brand" slot="brand" href="/" aria-label="Kawaikara 홈" data-i18n-aria="common.brand.home" data-astro-reload>
+    <BrandMark />
+    <span data-i18n="common.nav.home">Home</span>
+  </a>
+  <nav slot="navigation" aria-label="주요 탐색" data-i18n-aria="common.nav.aria">
+    <div class="primary-nav">
+      <a href="/docs/" data-astro-reload><BookOpen size={14} /> <span data-i18n="common.nav.docs">Docs</span></a>
+      <a href="/api/" data-astro-reload><Braces size={14} /> <span data-i18n="common.nav.api">API</span></a>
+    </div>
+    <DocumentationSearch versionId={documentationVersion?.id} />
+    {documentationVersion && (
+      <div class="documentation-selectors" aria-label="문서 채널과 버전">
+        <ThemedSelect
+          action="navigate"
+          id="documentation-channel"
+          name="documentation-channel"
+          ariaLabel="문서 채널"
+          ariaLabelKey="docs.layout.channel"
+          selectedValue={channelDestinations[documentationVersion.channel]}
+          options={channelOptions}
+        />
+        <ThemedSelect
+          action="navigate"
+          id="documentation-version"
+          name="documentation-version"
+          ariaLabel="문서 버전"
+          ariaLabelKey="docs.layout.version"
+          selectedValue={getDocumentationDestination(documentationVersion, documentationSection)}
+          options={versionOptions}
+        />
+      </div>
+    )}
+    <LocaleSelector />
+  </nav>
+</SiteHeader>
+
+<style>
+  :global(.kc-header) {
+    --kc-header-control-height: 2.3rem;
+    align-items: center;
+    backdrop-filter: blur(18px);
+    background: rgb(10 9 15 / 78%);
+    border-bottom: 1px solid var(--kc-border);
+    display: flex;
+    height: 4.5rem;
+    justify-content: space-between;
+    padding: 0 clamp(1.1rem, 4vw, 4rem);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+
+  .brand {
+    align-items: center;
+    color: var(--kc-text);
+    display: inline-flex;
+    font-size: 1.05rem;
+    font-weight: 850;
+    gap: 0.75rem;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+
+  nav {
+    align-items: center;
+    display: flex;
+    gap: clamp(1rem, 2.5vw, 2.25rem);
+  }
+
+  .documentation-selectors {
+    align-items: center;
+    display: flex;
+    gap: 0.45rem;
+  }
+
+  .primary-nav {
+    align-items: center;
+    display: flex;
+  }
+
+  .primary-nav { gap: clamp(0.8rem, 1.8vw, 1.45rem); }
+
+  nav a {
+    align-items: center;
+    color: var(--kc-muted);
+    display: inline-flex;
+    font-size: 0.88rem;
+    font-weight: 650;
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    color: var(--kc-text);
+  }
+
+  @media (max-width: 520px) {
+    :global(.kc-header) {
+      --kc-header-control-height: 2.1rem;
+      height: 4rem;
+      padding-inline: 1rem;
+    }
+
+    .brand span { display: none; }
+    nav { gap: 0.75rem; }
+    .primary-nav { gap: 0.75rem; }
+    nav a { font-size: 0.8rem; }
+    .documentation-selectors { gap: 0.3rem; }
+  }
+
+  @media (max-width: 820px) {
+    .primary-nav { display: none; }
+  }
+</style>

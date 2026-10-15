@@ -1,0 +1,16 @@
+---
+title: "PICTURE_IN_PICTURE_POSITIONS"
+channel: "staging"
+appVersion: "3.0.0"
+siteApiVersion: "1.0.0"
+category: "Source API · Common"
+description: "Defines the shared picture in picture positions constant."
+displayPath: "Common/PictureInPicture"
+section: "app-api"
+sourceRef: "working-tree"
+sourcePath: "Common/PictureInPicture/variables/PICTURE_IN_PICTURE_POSITIONS.md"
+symbolKind: "Variable"
+---
+> `const` **PICTURE\_IN\_PICTURE\_POSITIONS**: readonly \[`"top-left"`, `"top-right"`, `"bottom-left"`, `"bottom-right"`, `"last"`\]
+
+Defines the shared picture in picture positions constant.
