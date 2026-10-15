@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -35,6 +36,20 @@ jobs:
         run: pnpm build
         env:
           PUBLIC_SITE_URL: https://kawaikara.faby.day
+      - name: Retain assets for cached pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/retain-pages-assets.py dist
+          runs=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/deploy.yml/runs?status=success&branch=main&per_page=2" --jq '.workflow_runs[].id')
+          for run in $runs; do
+            previous="$RUNNER_TEMP/pages-$run"
+            if gh run download "$run" --repo "$GITHUB_REPOSITORY" --name github-pages --dir "$previous"; then
+              python3 scripts/retain-pages-assets.py dist --archive "$previous/artifact.tar"
+            else
+              echo "::warning::Previous Pages artifact $run is unavailable; skipping asset retention."
+            fi
+          done
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:

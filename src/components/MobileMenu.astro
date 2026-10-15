@@ -102,6 +102,8 @@ import { Menu, X } from '@lucide/astro';
   .mobile-primary a { border: 1px solid var(--kc-border); border-radius: .75rem; color: var(--kc-text); padding: .85rem .5rem; text-align: center; text-decoration: none; }
   [data-mobile-menu-controls]:not(:empty) { border-bottom: 1px solid var(--kc-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
   dialog :global(.documentation-selectors) { display: flex; flex-wrap: wrap; gap: .75rem; }
+  dialog :global(.documentation-selectors .kc-select__trigger) { max-width: none; }
+  dialog :global(.documentation-selectors .kc-select__menu) { left: 0; right: auto; min-width: 10rem; max-width: calc(100vw - 2rem); }
   dialog :global(.kc-sidebar) { display: block; position: static; border: 0; padding: 0; max-height: none; overflow: visible; }
   @media (max-width: 900px) { .mobile-menu-trigger { display: inline-flex; } }
 </style>

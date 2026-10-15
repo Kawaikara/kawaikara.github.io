@@ -89,3 +89,16 @@ pnpm docs:import --source ../kawaikara/dev3 --ref working-tree --channel staging
 생성 결과는 `src/content/reference/<channel>/<app-version>/`에 저장됩니다. 버전
 선택기는 `src/data/documentation-versions.json`을 사용하며, 각 App Snapshot에
 포함된 Site API와 Bundle 버전은 Section Metadata로 별도 표시합니다.
+
+## 문서 갱신과 웹 배포의 차이
+
+문서 생성은 `pnpm docs:import`로 실행합니다. 현재 Pages workflow는 이 명령을 자동 실행하거나 앱 저장소를 checkout하지 않습니다.
+
+1. 앱 저장소의 `docs/Developer`(구버전은 `docs`)와 `docs/build` Markdown을 가져옵니다.
+2. 같은 앱 소스의 `src`(구버전은 `typescript_src`), `packages/site-api`, `packages/builtin-sites`를 TypeDoc으로 분석합니다. 타입·함수·클래스 선언과 문서 주석을 Markdown 레퍼런스로 생성합니다.
+3. 결과를 `src/content/reference/<channel>/<version>/`에 저장하고 `src/data/documentation-versions.json`의 버전·메뉴 정보를 갱신합니다.
+4. 생성 결과를 이 저장소의 `main`에 commit/push하면 Actions가 `pnpm build`로 정적 HTML을 만들고 GitHub Pages에 배포합니다.
+
+현재 `stable/2.3.1`은 태그 기반 스냅샷이고 `staging/3.0.0`의 Dev Preview는 가져오기 당시 로컬 작업 트리 스냅샷입니다. 앱의 코드·주석만 수정해 push해도 웹 문서가 자동으로 갱신되지는 않습니다. 문서 갱신에는 importer 재실행과 생성 결과의 push가 필요합니다.
+
+배포 시 최근 성공한 두 배포의 `_astro` 파일도 유지합니다. 캐시된 HTML이나 이미 열린 문서가 이전 CSS·JavaScript를 요청할 때 404로 화면이 깨지는 것을 줄입니다. 현재 빌드 자산 목록을 별도로 기록하여 이전 자산이 무한히 누적되지 않게 합니다. 이 보존 범위보다 오래된 탭은 새로고침이 필요할 수 있습니다.

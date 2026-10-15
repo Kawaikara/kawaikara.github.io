@@ -15,7 +15,7 @@
     "@astrojs/mdx": "^7.0.5",
     "@lucide/astro": "^1.31.0",
     "astro": "^7.1.6",
-    "kawaichen": "git+https://github.com/Kawaikara/KawaiChen.git#e0e4841a96fdd54208dc5537e80002a5d7fb878f",
+    "kawaichen": "git+https://github.com/Kawaikara/KawaiChen.git#7309f08f7d977f643200a1b16646ae2f74c25418",
     "mermaid": "^11.17.2",
     "simple-icons": "^16.28.0"
   },

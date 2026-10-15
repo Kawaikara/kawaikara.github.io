@@ -18,8 +18,8 @@ importers:
         specifier: ^7.1.6
         version: 7.2.1(@astrojs/markdown-remark@7.2.2)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)
       kawaichen:
-        specifier: git+https://github.com/Kawaikara/KawaiChen.git#e0e4841a96fdd54208dc5537e80002a5d7fb878f
-        version: https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/e0e4841a96fdd54208dc5537e80002a5d7fb878f(astro@7.2.1(@astrojs/markdown-remark@7.2.2)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0))
+        specifier: git+https://github.com/Kawaikara/KawaiChen.git#7309f08f7d977f643200a1b16646ae2f74c25418
+        version: https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/7309f08f7d977f643200a1b16646ae2f74c25418(astro@7.2.1(@astrojs/markdown-remark@7.2.2)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0))
       mermaid:
         specifier: ^11.17.2
         version: 11.17.2
@@ -1562,8 +1562,8 @@ packages:
     resolution: {integrity: sha512-Eeo8Ys1doU1z+x8AZsPpQu+p/QcZBI5PeOo7QGQdy2x2m0MU/hYagBbGOmXwr5KVbEfVuWv9LpnQWeehogurjg==}
     hasBin: true
 
-  kawaichen@https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/e0e4841a96fdd54208dc5537e80002a5d7fb878f:
-    resolution: {tarball: https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/e0e4841a96fdd54208dc5537e80002a5d7fb878f}
+  kawaichen@https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/7309f08f7d977f643200a1b16646ae2f74c25418:
+    resolution: {tarball: https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/7309f08f7d977f643200a1b16646ae2f74c25418}
     version: 0.0.1
     peerDependencies:
       astro: ^7.1.6
@@ -4210,7 +4210,7 @@ snapshots:
     dependencies:
       commander: 8.3.0
 
-  kawaichen@https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/e0e4841a96fdd54208dc5537e80002a5d7fb878f(astro@7.2.1(@astrojs/markdown-remark@7.2.2)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)):
+  kawaichen@https://codeload.github.com/Kawaikara/KawaiChen/tar.gz/7309f08f7d977f643200a1b16646ae2f74c25418(astro@7.2.1(@astrojs/markdown-remark@7.2.2)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)):
     dependencies:
       astro: 7.2.1(@astrojs/markdown-remark@7.2.2)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(yaml@2.9.0)
 

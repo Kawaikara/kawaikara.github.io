@@ -15,7 +15,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Desktop viewer</span>
       <h1>Kawaikara</h1>
-      <p>Windows와 macOS에서 사용할 수 있는 Kawaikara 데스크톱 앱을 다운로드하세요.</p>
+      <p>Windows와 macOS용 Kawaikara 데스크톱 앱을 다운로드하세요.</p>
       <div class="hero-actions">
         <a class="button button--primary" href="https://github.com/fabyday/kawaikara/releases/latest" target="_blank" rel="noreferrer">
           <Download size={18} /> 최신 버전 다운로드
@@ -47,8 +47,8 @@ import SiteLayout from '../layouts/SiteLayout.astro';
   .download-hero {
     align-items: center;
     display: grid;
-    gap: clamp(3rem, 8vw, 8rem);
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.72fr);
+    gap: clamp(2rem, 4vw, 5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.45fr);
     min-height: calc(100vh - 4.5rem);
     padding: clamp(5rem, 11vw, 10rem) clamp(1.1rem, 7vw, 8rem);
   }
@@ -67,7 +67,9 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     color: var(--kc-muted);
     font-size: clamp(1rem, 1.5vw, 1.2rem);
     line-height: 1.75;
-    max-width: 39rem;
+    max-width: none;
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
 
   .hero-actions,
@@ -92,7 +94,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     flex-direction: column;
     gap: 2rem;
     justify-content: center;
-    min-height: 24rem;
+    min-height: 16rem;
   }
 
   .brand-panel span {
@@ -109,7 +111,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     border-top: 1px solid var(--kc-border);
     display: grid;
     gap: 3rem;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     margin: 0 clamp(1.1rem, 4vw, 4rem) 4rem;
     padding: clamp(3rem, 7vw, 6rem);
   }
@@ -131,6 +133,10 @@ import SiteLayout from '../layouts/SiteLayout.astro';
   }
 
   .text-link:hover { color: var(--kc-accent); }
+
+  @media (min-width: 901px) {
+    .hero-copy > p, .extension-copy p { white-space: nowrap; font-size: clamp(.9rem, 1.15vw, 1.2rem); }
+  }
 
   @media (max-width: 860px) {
     .download-hero,
