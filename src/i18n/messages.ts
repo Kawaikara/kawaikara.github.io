@@ -9,6 +9,9 @@ export const messages: Record<Locale, Dictionary> = {
   ko: {
     'common.nav.aria': '주요 탐색',
     'common.nav.home': '홈',
+    'common.menu.open': '메뉴 열기',
+    'common.menu.close': '메뉴 닫기',
+    'common.menu.title': '메뉴',
     'common.nav.services': '지원 서비스',
     'common.nav.docs': 'Docs',
     'common.nav.api': 'API',
@@ -225,6 +228,9 @@ export const messages: Record<Locale, Dictionary> = {
   en: {
     'common.nav.aria': 'Main navigation',
     'common.nav.home': 'Home',
+    'common.menu.open': 'Open menu',
+    'common.menu.close': 'Close menu',
+    'common.menu.title': 'Menu',
     'common.nav.services': 'Supported services',
     'common.nav.docs': 'Docs',
     'common.nav.api': 'API',
@@ -441,6 +447,9 @@ export const messages: Record<Locale, Dictionary> = {
   ja: {
     'common.nav.aria': 'メインナビゲーション',
     'common.nav.home': 'ホーム',
+    'common.menu.open': 'メニューを開く',
+    'common.menu.close': 'メニューを閉じる',
+    'common.menu.title': 'メニュー',
     'common.nav.services': '対応サービス',
     'common.nav.docs': 'ドキュメント',
     'common.nav.api': 'API',

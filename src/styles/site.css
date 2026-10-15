@@ -139,3 +139,15 @@ a {
   [data-parallax] { translate: none; transition: none; }
   .scroll-progress { display: none; }
 }
+
+/* Keep intrinsic content from widening narrow layouts. */
+main, section, article { min-width: 0; }
+img { max-width: 100%; }
+.button { max-width: 100%; text-align: center; }
+.button svg { flex-shrink: 0; }
+:where(h1, h2, h3, p) { overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  :root { --kc-header-height: 4rem; }
+  .kc-header .search-trigger { min-width: 44px; min-height: 44px; }
+  .kc-header .kc-select__trigger { min-height: 44px; }
+}

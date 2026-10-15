@@ -250,7 +250,8 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
   .fallback a { color: var(--kc-text); }
 
   @media (max-width: 540px) {
-    .open-card { border-radius: 1.35rem; }
+    .open-card { border-radius: 1.35rem; padding: 1.5rem; min-width: 0; }
+    h1 { font-size: clamp(2rem, 9vw, 3rem); }
     .actions { display: grid; }
   }
 </style>

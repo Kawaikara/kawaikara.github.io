@@ -1,4 +1,5 @@
 ---
+import MobileMenu from './MobileMenu.astro';
 import BrandMark from './BrandMark.astro';
 import DocumentationSearch from './DocumentationSearch.astro';
 import LocaleSelector from './LocaleSelector.astro';
@@ -43,10 +44,13 @@ const versionOptions = availableVersions.map((version) => ({
 ---
 
 <SiteHeader site={{ title: 'Kawaikara', homeHref: '/' }}>
-  <a class="brand" slot="brand" href="/" aria-label="Kawaikara 홈" data-i18n-aria="common.brand.home" data-astro-reload>
+  <div class="header-brand" slot="brand">
+  <MobileMenu />
+  <a class="brand" href="/" aria-label="Kawaikara 홈" data-i18n-aria="common.brand.home" data-astro-reload>
     <BrandMark />
     <span data-i18n="common.nav.home">Home</span>
   </a>
+  </div>
   <nav slot="navigation" aria-label="주요 탐색" data-i18n-aria="common.nav.aria">
     <div class="primary-nav">
       <a href="/docs/" data-astro-reload><BookOpen size={14} /> <span data-i18n="common.nav.docs">Docs</span></a>
@@ -94,6 +98,8 @@ const versionOptions = availableVersions.map((version) => ({
     top: 0;
     z-index: 30;
   }
+
+  .header-brand { display: flex; align-items: center; gap: .65rem; min-width: 0; }
 
   .brand {
     align-items: center;
@@ -146,14 +152,17 @@ const versionOptions = availableVersions.map((version) => ({
       padding-inline: 1rem;
     }
 
-    .brand span { display: none; }
+    .brand > span { display: none; }
     nav { gap: 0.75rem; }
     .primary-nav { gap: 0.75rem; }
     nav a { font-size: 0.8rem; }
     .documentation-selectors { gap: 0.3rem; }
   }
 
-  @media (max-width: 820px) {
+  @media (max-width: 900px) {
+    .documentation-selectors { display: none; }
+    :global(.kc-header) { height: 4rem; padding-inline: 1rem; gap: .5rem; }
+    nav { gap: .5rem; }
     .primary-nav { display: none; }
   }
 </style>

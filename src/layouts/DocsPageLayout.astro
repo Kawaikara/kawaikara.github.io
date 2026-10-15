@@ -320,7 +320,10 @@ function groupsFor(section: DocumentationSection): DocumentationNavigationGroup[
 </BlankLayout>
 
 <style is:global>
-  .kc-docs-shell { --kc-docs-header-offset: 4.5rem; }
+  .kc-docs-shell { --kc-docs-header-offset: 4.5rem; --kc-docs-columns: minmax(14rem, 17rem) minmax(0, 58rem) minmax(14rem, 17rem); }
+  .kc-prose { min-width: 0; overflow-wrap: anywhere; }
+  .kc-prose img { max-width: 100%; height: auto; }
+  .kc-prose pre { overflow-wrap: normal; }
 
   .docs-navigation section + section { margin-top: 2rem; }
   .docs-navigation h2,
@@ -540,10 +543,11 @@ function groupsFor(section: DocumentationSection): DocumentationNavigationGroup[
     .kc-docs-shell { --kc-docs-tablet-columns: minmax(15rem, 18rem) minmax(0, 1fr); }
   }
 
-  @media (max-width: 760px) {
-    .docs-navigation { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.35rem; }
-    .docs-navigation section { flex: 0 0 13rem; max-height: 12.5rem; overflow-y: auto; }
-    .docs-navigation section + section { margin-top: 0; }
+  @media (max-width: 900px) {
+    .kc-docs-shell { display: block; --kc-docs-header-offset: 4rem; }
+    .kc-docs-shell > .kc-sidebar { display: none; }
+    .kc-docs-main { max-width: 48rem; margin-inline: auto; padding: 2rem 1.25rem 4rem; }
+    .docs-navigation a { min-height: 44px; display: flex; align-items: center; overflow-wrap: anywhere; }
     .kc-prose .doc-grid { grid-template-columns: 1fr; }
     .kc-prose .api-category-grid { grid-template-columns: 1fr; }
   }

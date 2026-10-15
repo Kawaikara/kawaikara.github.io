@@ -53,7 +53,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     padding: clamp(5rem, 11vw, 10rem) clamp(1.1rem, 7vw, 8rem);
   }
 
-  .hero-copy { max-width: 48rem; }
+  .hero-copy { min-width: 0; max-width: 48rem; }
 
   h1 {
     font-size: clamp(4rem, 11vw, 10rem);
@@ -134,14 +134,23 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   @media (max-width: 860px) {
     .download-hero,
-    .extension-intro { grid-template-columns: 1fr; }
-    .download-hero { min-height: auto; }
+    .extension-intro { grid-template-columns: minmax(0, 1fr); }
+    .download-hero { min-height: auto; max-width: 48rem; margin-inline: auto; text-align: center; }
+    .hero-copy { margin-inline: auto; }
+    .hero-copy > p { margin-inline: auto; }
+    .hero-actions, .extension-actions { justify-content: center; }
+    .extension-intro { text-align: center; padding-inline: 1.25rem; }
+    .extension-copy p { margin-inline: auto; }
+    .brand-panel { width: 100%; min-width: 0; }
     .brand-panel { aspect-ratio: 5 / 3; min-height: 20rem; }
   }
 
   @media (max-width: 520px) {
-    .download-hero { padding-top: 4rem; }
-    .brand-panel { min-height: 17rem; }
+    .download-hero { padding: 3rem 1.25rem; gap: 2.5rem; }
+    h1 { font-size: clamp(2.8rem, 13vw, 4.5rem); }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .brand-panel span { letter-spacing: .04em; text-align: center; padding-inline: 1rem; }
+    .brand-panel { aspect-ratio: auto; min-height: 17rem; }
     .extension-intro { margin-bottom: 1.1rem; }
   }
 </style>

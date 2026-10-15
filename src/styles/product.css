@@ -1,7 +1,7 @@
 .product-hero {
   display: grid;
   gap: clamp(3rem, 8vw, 8rem);
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   min-height: calc(100vh - 4.5rem);
   padding: clamp(5rem, 10vw, 9rem) clamp(1.1rem, 7vw, 8rem);
 }
@@ -111,7 +111,7 @@
 .feature-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .feature-card {
@@ -153,3 +153,22 @@
   .panel-row small { grid-column: 2; }
 }
 
+
+@media (max-width: 900px) {
+  .product-hero { max-width: 48rem; margin-inline: auto; min-height: auto; padding: 3rem 1.25rem; gap: 2.5rem; }
+  .product-copy, .feature-heading { text-align: center; margin-inline: auto; }
+  .product-copy > p { margin-inline: auto; }
+  .product-actions { justify-content: center; }
+  .product-panel { width: 100%; min-width: 0; }
+  .feature-section { padding: 3rem 1.25rem; }
+  .feature-grid { max-width: 48rem; margin-inline: auto; }
+  .feature-card { min-height: auto; }
+  .feature-card h3 { margin-top: 1.5rem; }
+  .product-cta { text-align: center; justify-items: center; margin-inline: 1.25rem; }
+}
+@media (max-width: 560px) {
+  .product-copy h1 { font-size: clamp(2.5rem, 11vw, 4rem); }
+  .product-actions { flex-direction: column; align-items: stretch; }
+  .panel-row { grid-template-columns: auto minmax(0, 1fr); }
+  .panel-row strong, .panel-row small { overflow-wrap: anywhere; }
+}
